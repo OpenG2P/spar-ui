@@ -1,15 +1,15 @@
 import Image from "next/image";
 
-import {getProfile} from "../_utils/auth";
+import {getProfile} from "../_utils/client/auth";
 import {redirect} from "next/navigation";
-import {prefixRootPath} from "../_utils/path";
+import {prefixBasePath} from "../_utils/path";
 import LoginBox from "./loginbox";
 
 export default async function Login() {
   const profile = await getProfile();
 
   if (profile) {
-    redirect(prefixRootPath("/home"));
+    redirect("/home");
   }
 
   return (
@@ -17,11 +17,12 @@ export default async function Login() {
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center lg:static lg:w-auto">
           <Image
-            src={prefixRootPath("/img/logo.svg")}
+            src={prefixBasePath("/img/logo.svg")}
             alt="National Social Payments Account Registry"
-            width={280}
-            height={24}
+            width={450}
+            height={150}
             priority
+            unoptimized
           />
         </p>
       </div>

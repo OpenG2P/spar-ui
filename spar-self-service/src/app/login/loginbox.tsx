@@ -1,5 +1,6 @@
 "use client";
 
+import {Button} from "@mui/material";
 import {SyntheticEvent} from "react";
 
 export default function LoginBox() {
@@ -21,9 +22,7 @@ export default function LoginBox() {
             <input className="p-1" type="password" placeholder="Enter password" name="password" required />
           </div>
           <div className="mb-1 p-2">
-            <button className="" type="submit">
-              Login
-            </button>
+            <Button variant="outlined">Login</Button>
           </div>
         </form>
       </div>
@@ -32,7 +31,7 @@ export default function LoginBox() {
         <div className="border-0">
           <div className="m-2 text-center p-1">
             <a className="" href="https://esignet.collab.mosip.net/authorize">
-              Sign In with MOSIP Collab
+              <Button variant="outlined">Sign In with MOSIP Collab</Button>
             </a>
           </div>
         </div>

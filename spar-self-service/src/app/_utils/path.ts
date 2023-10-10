@@ -1,5 +1,7 @@
-import config from "../../../public/config.json";
+export function prefixBasePath(path: string) {
+  return (process.env.NEXT_PUBLIC_BASE_PATH || "") + path;
+}
 
-export function prefixRootPath(path: string) {
-  return config.rootPath + path;
+export function prefixBaseApiPath(path: string) {
+  return (process.env.NEXT_PUBLIC_BASE_API_PATH || "") + path;
 }
