@@ -5,17 +5,28 @@ import {prefixBaseApiPath} from "../utils/path";
 import {useEffect} from "react";
 
 // TODO: Try to use context or state
-export const authContext: {profile?: any} = {};
+export const authContext: {
+  profile?: null | {
+    sub?: string;
+    name?: string;
+    given_name?: string;
+    family_name?: string;
+    middle_name?: string;
+    picture?: string;
+    email?: string;
+    gender?: string;
+    birthdate?: string;
+    address?: any;
+    phone_number?: string;
+  };
+} = {profile: null};
 
 export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl?: string}) {
   const {push} = useRouter();
 
   function checkAndRedirect() {
-    if (params.successRedirectUrl && authContext.profile) {
-      push(params.successRedirectUrl);
-    } else if (params.failedRedirectUrl && !authContext.profile) {
-      push(params.failedRedirectUrl);
-    }
+    if (params.successRedirectUrl && authContext.profile) return push(params.successRedirectUrl);
+    else if (params.failedRedirectUrl && !authContext.profile) return push(params.failedRedirectUrl);
   }
 
   useEffect(() => {
