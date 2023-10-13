@@ -2,7 +2,7 @@
 
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import {useState} from "react";
-import {prefixBaseApiPath} from "../_utils/path";
+import {prefixBaseApiPath} from "../../utils/path";
 
 type CodeValue = {
   code: string;

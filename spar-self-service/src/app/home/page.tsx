@@ -1,18 +1,14 @@
 import Image from "next/image";
 
-import {getProfile} from "../_utils/client/auth";
-import {prefixBasePath} from "../_utils/path";
+import {AuthUtil, authContext} from "../../components/auth";
+import {prefixBasePath} from "../../utils/path";
 import GetFaBox from "./get-fa-box";
 import UpdateFaBox from "./update-fa-box";
 
 export default async function Home() {
-  const profile = await getProfile();
-
-  // if (!profile) {
-  //   redirect(prefixBasePath("/login"));
-  // }
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-7">
+      <AuthUtil failedRedirectUrl="/login" />
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center lg:static lg:w-auto">
           <Image
