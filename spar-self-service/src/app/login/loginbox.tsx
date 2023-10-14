@@ -50,13 +50,15 @@ export default function LoginBox() {
       <div className="p-2 text-center">OR</div>
       <div className="border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
         <div className="border-0">
-          {loginProviders.map((x) => (
-            <div key={`provider-${x.id}`} className="m-2 text-center p-1">
-              <a href={prefixBaseApiPath(`/auth/getLoginProviderRedirect/${x.id}`)}>
-                <Button variant="outlined">{x.displayName}</Button>
-              </a>
-            </div>
-          ))}
+          {loginProviders &&
+            loginProviders.length != 0 &&
+            loginProviders.map((x) => (
+              <div key={`provider-${x.id}`} className="m-2 text-center p-1">
+                <a href={prefixBaseApiPath(`/auth/getLoginProviderRedirect/${x.id}`)}>
+                  <Button variant="outlined">{x.displayName}</Button>
+                </a>
+              </div>
+            ))}
         </div>
       </div>
     </div>

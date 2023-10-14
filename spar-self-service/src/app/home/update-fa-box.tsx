@@ -4,14 +4,14 @@ import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui
 import {useState} from "react";
 import {prefixBaseApiPath} from "../../utils/path";
 
-type CodeValue = {
-  code: string;
+type KeyValue = {
+  key: string;
   value: string;
 };
 
 type State = {
   renderFormState: boolean;
-  choices: CodeValue[];
+  choices: KeyValue[];
   levels: FormLevel[];
 };
 
@@ -27,7 +27,7 @@ export default function UpdateFaBox() {
     }
   }
 
-  function fetchLevelsAndRender(localFormData: State, listIndex: number, levelId: number) {
+  function fetchLevelsAndRender(localFormData: State, listIndex: number, levelId: number, id?: number) {
     fetch(prefixBaseApiPath(`/dfsp/getLevel/${levelId}`)).then((levelRes) => {
       levelRes.json().then((levelResJson: {id: number; name: string; code: string; level: number}) => {
         const formDataToPush: FormLevel = {
@@ -38,7 +38,9 @@ export default function UpdateFaBox() {
           options: [],
         };
         if (levelResJson.level >= 0) {
-          fetch(prefixBaseApiPath(`/dfsp/getLevelValues/${levelId}`))
+          fetch(
+            prefixBaseApiPath(`/dfsp/getLevelValues/${levelId}${id != undefined ? `?parentId=${id}` : ""}`)
+          )
             .then((levelValueRes) => {
               levelValueRes.json().then((levelValueResJson: FormLevelValueResponse) => {
                 formDataToPush.options = levelValueResJson.levelValues.map((x, i) => ({
@@ -66,30 +68,34 @@ export default function UpdateFaBox() {
   function onFieldChange(listIndex: number, value: string, textChange = false) {
     const localFormData = structuredClone(formData);
     pushOrResetArrayAfterIndex(localFormData.choices, listIndex, {
-      code: formData.levels[listIndex].name,
+      key: formData.levels[listIndex].name,
       value,
     });
-    if (textChange) return;
-    let nextLevelId: number = 0;
+    if (textChange) {
+      setFormData(localFormData);
+      return;
+    }
+    let selectedOption: any;
     formData.levels[listIndex].options.forEach((x) => {
       if (x.name === value) {
-        nextLevelId = x.nextLevelId;
+        selectedOption = x;
         return;
       }
     });
-    fetchLevelsAndRender(localFormData, listIndex + 1, nextLevelId);
+    fetchLevelsAndRender(localFormData, listIndex + 1, selectedOption.nextLevelId, selectedOption.id);
   }
 
   function updateFaSubmit() {
+    const localFormData = structuredClone(formData);
     if (!formData.renderFormState) {
-      const localFormData = structuredClone(formData);
       localFormData.renderFormState = true;
       fetchLevelsAndRender(localFormData, 0, 1);
       return;
     }
-    fetch(prefixBaseApiPath("/dfsp/updateFaRequest"), {
+    // TODO: Reflect status back into the portal
+    fetch(prefixBaseApiPath("/selfservice/updateFaRequest"), {
       method: "POST",
-      body: JSON.stringify({dfspValues: formData.choices}),
+      body: JSON.stringify({level_values: localFormData.choices}),
       headers: {"Content-Type": "application/json"},
     });
   }
