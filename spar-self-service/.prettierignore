@@ -1,0 +1,8 @@
+.prettierignore
+public/
+.gitignore
+.husky/
+.next/
+dist
+node_modules
+package.json
