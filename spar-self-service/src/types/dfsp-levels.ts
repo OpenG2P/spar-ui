@@ -1,4 +1,4 @@
-type FormLevel = {
+export type FormLevel = {
   id: number;
   name: string;
   displayName: string;
@@ -11,7 +11,7 @@ type FormLevel = {
   }[];
 };
 
-type FormLevelValueResponse = {
+export type FormLevelValueResponse = {
   levelValues: {
     id: number;
     name: string;

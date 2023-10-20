@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import {useState, MouseEvent, useEffect} from "react";
+import {useState, MouseEvent} from "react";
 
 import {authContext} from "../../components/auth";
 import {prefixBaseApiPath} from "@/utils/path";

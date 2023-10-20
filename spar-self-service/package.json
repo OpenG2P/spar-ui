@@ -26,6 +26,7 @@
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "postcss": "^8",
     "prettier": "^3.0.3",
     "tailwindcss": "^3",

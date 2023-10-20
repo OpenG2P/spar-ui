@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import {AuthUtil, authContext} from "../../components/auth";
+import {AuthUtil} from "../../components/auth";
 import {prefixBasePath} from "../../utils/path";
 import GetFaBox from "./get-fa-box";
 import UpdateFaBox from "./update-fa-box";

@@ -1,8 +1,10 @@
 "use client";
 
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Button, MenuItem, TextField} from "@mui/material";
 import {useState} from "react";
 import {prefixBaseApiPath} from "../../utils/path";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import {FormLevel, FormLevelValueResponse} from "../../types/dfsp-levels";
 
 type KeyValue = {
   key: string;
@@ -10,13 +12,13 @@ type KeyValue = {
 };
 
 type State = {
-  renderFormState: boolean;
+  renderFormState: number;
   choices: KeyValue[];
   levels: FormLevel[];
 };
 
 export default function UpdateFaBox() {
-  const [formData, setFormData] = useState<State>({renderFormState: false, choices: [], levels: []});
+  const [formData, setFormData] = useState<State>({renderFormState: 0, choices: [], levels: []});
 
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
@@ -43,7 +45,7 @@ export default function UpdateFaBox() {
           )
             .then((levelValueRes) => {
               levelValueRes.json().then((levelValueResJson: FormLevelValueResponse) => {
-                formDataToPush.options = levelValueResJson.levelValues.map((x, i) => ({
+                formDataToPush.options = levelValueResJson.levelValues.map((x) => ({
                   id: x.id,
                   displayName: x.name,
                   name: x.code,
@@ -87,44 +89,58 @@ export default function UpdateFaBox() {
 
   function updateFaSubmit() {
     const localFormData = structuredClone(formData);
-    if (!formData.renderFormState) {
-      localFormData.renderFormState = true;
+    if (formData.renderFormState === 0) {
+      localFormData.renderFormState = 1;
       fetchLevelsAndRender(localFormData, 0, 1);
-      return;
+    } else {
+      fetch(prefixBaseApiPath("/selfservice/updateFaRequest"), {
+        method: "POST",
+        body: JSON.stringify({level_values: localFormData.choices}),
+        headers: {"Content-Type": "application/json"},
+      });
+      localFormData.renderFormState = 2;
+      setFormData(localFormData);
     }
-    // TODO: Reflect status back into the portal
-    fetch(prefixBaseApiPath("/selfservice/updateFaRequest"), {
-      method: "POST",
-      body: JSON.stringify({level_values: localFormData.choices}),
-      headers: {"Content-Type": "application/json"},
-    });
   }
 
   return (
     <>
-      <div>
-        <h2 className="p-4">Update your Linked Financial Address.</h2>
-        <div className="flex-column justify-center items-center p-4">
-          {formData.levels.map((x, i) => (
-            <div key={`input-${i}`} className="m-5">
-              <TextField
-                label={x.displayName}
-                onChange={(event) => onFieldChange(i, event.target.value, x.isTextField)}
-                select={!x.isTextField}
-                fullWidth
-              >
-                {!x.isTextField &&
-                  x.options.map((y, j) => (
-                    <MenuItem key={`input-menu-${j}`} value={y.name}>
-                      {y.displayName}
-                    </MenuItem>
-                  ))}
-              </TextField>
+      <div className="container">
+        <div className="row flex justify-content-center">
+          <h2 className="p-4">Update your Linked Financial Address.</h2>
+        </div>
+        {formData.renderFormState === 1 && (
+          <div className="row">
+            {formData.levels.map((x, i) => (
+              <div key={`input-${i}`} className="m-5">
+                <TextField
+                  label={x.displayName}
+                  onChange={(event) => onFieldChange(i, event.target.value, x.isTextField)}
+                  select={!x.isTextField}
+                  fullWidth
+                >
+                  {!x.isTextField &&
+                    x.options.map((y, j) => (
+                      <MenuItem key={`input-menu-${j}`} value={y.name}>
+                        {y.displayName}
+                      </MenuItem>
+                    ))}
+                </TextField>
+              </div>
+            ))}
+          </div>
+        )}
+        {formData.renderFormState === 2 && (
+          <div className="row flex justify-content-center">
+            <div className="mx-auto my-10">
+              <CheckCircleOutlineIcon sx={{scale: "1.8"}} fontSize="large" color="success" />
             </div>
-          ))}
-          <div className="m-5">
+          </div>
+        )}
+        <div className="row flex justify-content-center">
+          <div className="mx-auto mb-2">
             <Button variant="contained" onClick={updateFaSubmit}>
-              {formData.renderFormState ? "Submit" : "Update Details"}
+              {formData.renderFormState === 1 ? "Submit" : "Update Details"}
             </Button>
           </div>
         </div>

@@ -2,7 +2,6 @@
 
 import {prefixBaseApiPath} from "@/utils/path";
 import {Button, CircularProgress} from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import {useState} from "react";
 
 export default function GetFaBox() {
@@ -41,19 +40,26 @@ export default function GetFaBox() {
 
   return (
     <>
-      <div>
-        <h2>Currently Linked Financial Address.</h2>
+      <div className="container">
+        <div className="row flex justify-content-center">
+          <h2 className="p-4">Currently Linked Financial Address.</h2>
+        </div>
         {getFaState.state > 0 && (
-          <div className="m-5">
-            {getFaState.state === 1 && <CircularProgress />}
-            {getFaState.state === 2 && <p>{getFaState.fa}</p>}
-            {/* {getFaState.state === 2 && <CheckCircleOutlineIcon  color="success"/>} */}
+          <div className="row flex justify-content-center">
+            <div className="mx-auto my-5">
+              {getFaState.state === 1 && <CircularProgress />}
+              {getFaState.state === 2 && <p>{getFaState.fa}</p>}
+            </div>
           </div>
         )}
         {getFaState.state != 1 && (
-          <Button onClick={onClick} variant="outlined">
-            Get Current Financial Address
-          </Button>
+          <div className="row flex justify-content-center">
+            <div className="mx-auto mb-2">
+              <Button onClick={onClick} variant="outlined">
+                Get Current Financial Address
+              </Button>
+            </div>
+          </div>
         )}
       </div>
     </>
