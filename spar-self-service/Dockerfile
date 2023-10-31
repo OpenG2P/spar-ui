@@ -6,15 +6,17 @@ RUN apk add --no-cache libc6-compat
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-USER nextjs
-
 WORKDIR /app
 
+RUN chown -R nextjs:nodejs /app
+
+USER nextjs
+
 # Install dependencies based on the preferred package manager
-COPY package.json package-lock.json* ./
+COPY --chown=nextjs:nodejs package.json package-lock.json* ./
 RUN npm ci
 
-COPY . .
+COPY --chown=nextjs:nodejs . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
