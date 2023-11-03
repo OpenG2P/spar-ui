@@ -1,0 +1,51 @@
+name: Build Docker and Push
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  docker-build:
+    name: Docker Build and Push
+    runs-on: ubuntu-latest
+    env:
+      NAMESPACE: ${{ secrets.docker_hub_organisation }}
+      SELF_SERVICE_IMAGE_NAME: "spar-self-service-ui"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup branch and env
+        run: |
+          # Strip git ref prefix from version
+          BRANCH_NAME=$(echo ${{ github.ref }} | sed -e 's,.*/\(.*\),\1,')
+          VERSION=$BRANCH_NAME
+          if [[ $BRANCH_NAME == master || $BRANCH_NAME == main ]]; then
+            VERSION=develop
+          fi
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Build selfservice docker
+        run: |
+          SELF_SERVICE_IMAGE_ID=$NAMESPACE/$SELF_SERVICE_IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          SELF_SERVICE_IMAGE_ID=$(echo $SELF_SERVICE_IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          echo IMAGE_ID=$SELF_SERVICE_IMAGE_ID
+          echo VERSION=$VERSION
+
+          echo "SELF_SERVICE_IMAGE_ID=$SELF_SERVICE_IMAGE_ID" >> $GITHUB_ENV
+
+          cd spar-self-service
+          docker build . \
+            --file Dockerfile \
+            --tag $SELF_SERVICE_IMAGE_ID:$VERSION
+      - name: Docker login
+        run: |
+          echo "${{ secrets.docker_hub_token }}" | docker login -u ${{ secrets.docker_hub_actor }} --password-stdin
+          if [ $? -ne 0 ];then
+            echo "::error::Failed to Login to dockerhub"
+            exit 1;
+          fi
+      - name: Docker Push images
+        run: |
+          docker push $SELF_SERVICE_IMAGE_ID:$VERSION
