@@ -20,7 +20,7 @@ export const authContext: {
     phone_number?: string;
   };
   getFaRaw: boolean;
-} = {profile: null, getFaRaw: false};
+} = {profile: null, getFaRaw: process.env.NEXT_PUBLIC_DEFAULT_GET_FA_RAW == "true" || false};
 
 export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl?: string}) {
   const {push} = useRouter();

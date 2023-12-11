@@ -53,7 +53,14 @@ export default function GetFaBox() {
         {renderState === 2 && !(getFaResult instanceof Array) && (
           <div className="row">
             <div className="m-5">
-              <TextField label="FA" InputProps={{readOnly: true}} fullWidth value={getFaResult} />
+              {/* TODO: Remove Hardcoding for width */}
+              <TextField
+                label="FA"
+                inputProps={{sx: {width: "370px", textAlign: "center"}}}
+                InputProps={{readOnly: true}}
+                fullWidth
+                value={getFaResult}
+              />
             </div>
           </div>
         )}
