@@ -19,7 +19,8 @@ export const authContext: {
     address?: any;
     phone_number?: string;
   };
-} = {profile: null};
+  getFaRaw: boolean;
+} = {profile: null, getFaRaw: false};
 
 export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl?: string}) {
   const {push} = useRouter();

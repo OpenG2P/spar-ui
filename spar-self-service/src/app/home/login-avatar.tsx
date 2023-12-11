@@ -4,10 +4,14 @@ import {
   Avatar,
   Box,
   Divider,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
+  Switch,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -21,6 +25,8 @@ import {useRouter} from "next/navigation";
 
 export default function LoginAvatar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [getFaRaw, setGetFaRaw] = useState(authContext.getFaRaw);
+
   const {push} = useRouter();
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -82,6 +88,25 @@ export default function LoginAvatar() {
           </ListItemIcon>
           Settings
         </MenuItem>
+        <MenuItem>
+          <FormControl>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={getFaRaw}
+                    onChange={(event) => {
+                      authContext.getFaRaw = event.target.checked;
+                      setGetFaRaw(authContext.getFaRaw);
+                    }}
+                  />
+                }
+                label="Get Raw FA"
+              />
+            </FormGroup>
+          </FormControl>
+        </MenuItem>
+        <Divider />
         <MenuItem onClick={logoutHandler}>
           <ListItemIcon>
             <Logout fontSize="medium" />
