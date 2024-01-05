@@ -1,24 +1,23 @@
 "use client";
 
-import {Button, MenuItem, TextField} from "@mui/material";
+import {Button, CircularProgress, MenuItem, TextField} from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import {useState} from "react";
 import {prefixBaseApiPath} from "../../utils/path";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import {FormLevel, FormLevelValueResponse} from "../../types/dfsp-levels";
-
-type KeyValue = {
-  key: string;
-  value: string;
-};
+import {getFa} from "../../utils/getFa";
+import {updateFa} from "../../utils/updateFa";
+import {FormLevel, FormLevelValue, KeyValue} from "../../types/dfsp-levels";
 
 type State = {
-  renderFormState: number;
   choices: KeyValue[];
   levels: FormLevel[];
 };
 
 export default function UpdateFaBox() {
-  const [formData, setFormData] = useState<State>({renderFormState: 0, choices: [], levels: []});
+  const [formData, setFormData] = useState<State>({choices: [], levels: []});
+  // 0 - empty/default. 1 - update form. 2 - loading. 3 - succ. 4 - fail.
+  const [renderState, setRenderState] = useState(0);
+  var alreadyLinked = false;
 
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
@@ -29,77 +28,104 @@ export default function UpdateFaBox() {
     }
   }
 
-  function fetchLevelsAndRender(localFormData: State, listIndex: number, levelId: number, id?: number) {
-    fetch(prefixBaseApiPath(`/dfsp/getLevel/${levelId}`)).then((levelRes) => {
-      levelRes.json().then((levelResJson: {id: number; name: string; code: string; level: number}) => {
-        const formDataToPush: FormLevel = {
-          id: levelResJson.id,
-          name: levelResJson.code,
-          displayName: levelResJson.name,
-          isTextField: levelResJson.level < 0,
-          options: [],
-        };
-        if (levelResJson.level >= 0) {
-          fetch(
-            prefixBaseApiPath(`/dfsp/getLevelValues/${levelId}${id != undefined ? `?parentId=${id}` : ""}`)
-          )
-            .then((levelValueRes) => {
-              levelValueRes.json().then((levelValueResJson: FormLevelValueResponse) => {
-                formDataToPush.options = levelValueResJson.levelValues.map((x) => ({
-                  id: x.id,
-                  displayName: x.name,
-                  name: x.code,
-                  nextLevelId: x.next_level.id,
-                }));
+  function fetchLevelsAndRender(
+    localFormData: State,
+    listIndex: number,
+    levelId?: number,
+    parentId?: number
+  ) {
+    fetch(prefixBaseApiPath(`/dfsp/getLevels?id=${levelId}`)).then((levelRes) => {
+      levelRes.json().then((levelResJson: {levels: FormLevel[]}) => {
+        if (levelResJson.levels.length > 0) {
+          const formDataToPush = levelResJson.levels[0];
+          if (formDataToPush.level >= 0) {
+            fetch(
+              prefixBaseApiPath(
+                `/dfsp/getLevelValues?levelId=${levelId}${
+                  parentId != undefined ? `&parentId=${parentId}` : ""
+                }`
+              )
+            )
+              .then((levelValueRes) => {
+                levelValueRes.json().then((levelValueResJson: {levelValues: FormLevelValue[]}) => {
+                  formDataToPush.options = levelValueResJson.levelValues;
+                  pushOrResetArrayAfterIndex(localFormData.levels, listIndex, formDataToPush);
+                  setFormData(localFormData);
+                });
+              })
+              .catch(() => {
                 pushOrResetArrayAfterIndex(localFormData.levels, listIndex, formDataToPush);
                 setFormData(localFormData);
               });
-            })
-            .catch(() => {
-              pushOrResetArrayAfterIndex(localFormData.levels, listIndex, formDataToPush);
-              setFormData(localFormData);
-            });
-        } else {
-          pushOrResetArrayAfterIndex(localFormData.levels, listIndex, formDataToPush);
-          setFormData(localFormData);
+          } else {
+            pushOrResetArrayAfterIndex(localFormData.levels, listIndex, formDataToPush);
+            setFormData(localFormData);
+          }
         }
       });
     });
   }
 
-  function onFieldChange(listIndex: number, value: string, textChange = false) {
+  function onFieldChange(listIndex: number, value: string) {
     const localFormData = structuredClone(formData);
+    const formLevel = localFormData.levels[listIndex];
     pushOrResetArrayAfterIndex(localFormData.choices, listIndex, {
-      key: formData.levels[listIndex].name,
+      key: formLevel.code,
       value,
     });
-    if (textChange) {
-      setFormData(localFormData);
+    if (formLevel.level < 0) {
+      if (formLevel.next_level_id) {
+        fetchLevelsAndRender(localFormData, listIndex + 1, formLevel.next_level_id);
+      } else {
+        setFormData(localFormData);
+      }
       return;
     }
-    let selectedOption: any;
-    formData.levels[listIndex].options.forEach((x) => {
-      if (x.name === value) {
+    let selectedOption: FormLevelValue;
+    formLevel.options?.forEach((x) => {
+      if (x.code === value) {
         selectedOption = x;
+        fetchLevelsAndRender(localFormData, listIndex + 1, selectedOption.next_level_id, selectedOption.id);
         return;
       }
     });
-    fetchLevelsAndRender(localFormData, listIndex + 1, selectedOption.nextLevelId, selectedOption.id);
   }
 
   function updateFaSubmit() {
-    const localFormData = structuredClone(formData);
-    if (formData.renderFormState === 0) {
-      localFormData.renderFormState = 1;
+    setRenderState(2);
+    if (renderState !== 1 && renderState !== 2) {
+      setRenderState(1);
+      const localFormData = structuredClone(formData);
       fetchLevelsAndRender(localFormData, 0, 1);
     } else {
-      fetch(prefixBaseApiPath("/selfservice/updateFaRequest"), {
-        method: "POST",
-        body: JSON.stringify({level_values: localFormData.choices}),
-        headers: {"Content-Type": "application/json"},
-      });
-      localFormData.renderFormState = 2;
-      setFormData(localFormData);
+      const updateFaSuccess = (res: any) => {
+        if (res.status === "succ") {
+          setRenderState(3);
+        } else {
+          // TODO: Raise Error
+          console.log("Received failure on update FA", res);
+        }
+      };
+      const updateFaFailure = (res: any, err: any) => {
+        // TODO: Raise Error
+        console.log("Received Error while updating FA", res, err);
+      };
+      if (alreadyLinked) {
+        updateFa(updateFaSuccess, updateFaFailure, formData.choices, !alreadyLinked);
+      } else {
+        getFa(
+          (res) => {
+            alreadyLinked = res.status === "succ";
+            updateFa(updateFaSuccess, updateFaFailure, formData.choices, !alreadyLinked);
+          },
+          (res, err) => {
+            // TODO: Raise Error
+            console.log("Received Error while getting FA during update FA", res, err);
+          },
+          false,
+          0
+        );
+      }
     }
   }
 
@@ -109,20 +135,20 @@ export default function UpdateFaBox() {
         <div className="row flex justify-content-center">
           <h2 className="p-4">Update your Linked Financial Address.</h2>
         </div>
-        {formData.renderFormState === 1 && (
+        {renderState === 1 && (
           <div className="row">
             {formData.levels.map((x, i) => (
               <div key={`input-${i}`} className="m-5">
                 <TextField
-                  label={x.displayName}
-                  onChange={(event) => onFieldChange(i, event.target.value, x.isTextField)}
-                  select={!x.isTextField}
+                  label={x.name}
+                  onChange={(event) => onFieldChange(i, event.target.value)}
+                  select={x.level >= 0}
                   fullWidth
                 >
-                  {!x.isTextField &&
-                    x.options.map((y, j) => (
-                      <MenuItem key={`input-menu-${j}`} value={y.name}>
-                        {y.displayName}
+                  {x.level >= 0 &&
+                    x.options?.map((y, j) => (
+                      <MenuItem key={`input-menu-${j}`} value={y.code}>
+                        {y.name}
                       </MenuItem>
                     ))}
                 </TextField>
@@ -130,20 +156,38 @@ export default function UpdateFaBox() {
             ))}
           </div>
         )}
-        {formData.renderFormState === 2 && (
+        {renderState === 2 && (
+          <div className="row flex justify-content-center">
+            <div className="mx-auto my-10">
+              <CircularProgress />
+            </div>
+          </div>
+        )}
+        {renderState === 3 && (
           <div className="row flex justify-content-center">
             <div className="mx-auto my-10">
               <CheckCircleOutlineIcon sx={{scale: "1.8"}} fontSize="large" color="success" />
             </div>
           </div>
         )}
-        <div className="row flex justify-content-center">
-          <div className="mx-auto mb-2">
-            <Button variant="contained" onClick={updateFaSubmit}>
-              {formData.renderFormState === 1 ? "Submit" : "Update Details"}
-            </Button>
+        {renderState === 1 && (
+          <div className="row flex justify-content-center">
+            <div className="mx-auto mb-2">
+              <Button variant="contained" onClick={updateFaSubmit}>
+                Submit
+              </Button>
+            </div>
           </div>
-        </div>
+        )}
+        {renderState !== 1 && renderState !== 2 && (
+          <div className="row flex justify-content-center">
+            <div className="mx-auto mb-2">
+              <Button variant="contained" onClick={updateFaSubmit}>
+                Update Details
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
