@@ -115,7 +115,13 @@ export default function UpdateFaBox() {
       } else {
         getFa(
           (res) => {
-            alreadyLinked = res.status === "succ";
+            alreadyLinked =
+              res.status === "succ" &&
+              !(
+                res.status_reason_code === "succ.id.inactive" ||
+                res.status_reason_code === "succ.id.not_found" ||
+                res.status_reason_code === "succ.fa.not_linked_to_id"
+              );
             updateFa(updateFaSuccess, updateFaFailure, formData.choices, !alreadyLinked);
           },
           (res, err) => {
