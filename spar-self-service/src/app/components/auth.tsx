@@ -1,9 +1,10 @@
 "use client";
 
 import {useRouter} from "next/navigation";
-import {prefixBaseApiPath} from "../utils/path";
+import {prefixBaseApiPath} from "@/utils/path";
 import {useEffect} from "react";
-
+import { usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
 // TODO: Try to use context or state
 export const authContext: {
   profile?: null | {
@@ -23,12 +24,22 @@ export const authContext: {
 } = {profile: null, getFaRaw: process.env.NEXT_PUBLIC_DEFAULT_GET_FA_RAW == "true" || false};
 
 export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl?: string}) {
-  const {push} = useRouter();
+  const { push, replace } = useRouter();
+  const currentPath = usePathname();
+  const localActive = useLocale();
 
   function checkAndRedirect() {
-    if (params.successRedirectUrl && authContext.profile) return push(params.successRedirectUrl);
-    else if (params.failedRedirectUrl && !authContext.profile) return push(params.failedRedirectUrl);
+    const availableLocales = ['en', 'fr', 'tl'];
+    const locale = availableLocales.includes(localActive) ? localActive : 'en';
+
+    if (params.successRedirectUrl && authContext.profile) {
+      return push(params.successRedirectUrl);
+    } else if (params.failedRedirectUrl && !authContext.profile) {
+      const failedRedirectUrl = params.failedRedirectUrl ? `/${locale}${params.failedRedirectUrl}` : undefined;
+      return replace(params.failedRedirectUrl); // Ensure initial language path is preserved
+    }
   }
+
 
   useEffect(() => {
     fetch(prefixBaseApiPath("/auth/profile"))
@@ -54,6 +65,7 @@ export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl
       });
     // TODO: Find better way. Disable dependency error for now
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
   return <></>;
 }

@@ -1,0 +1,41 @@
+{
+    "NotFoundPage": {
+        "title": "Page non trouvée",
+        "description": "Oups ! Il semble que vous ayez atterri sur une page qui n'existe pas. Ne vous inquiétez pas, notre magie d'internationalisation est toujours à l'œuvre sur d'autres parties de l'application. N'hésitez pas à revenir en arrière pour explorer davantage !"
+    },
+    "Navigation": {
+        "support": "Support",
+        "contact": "contact"
+    },
+    "ProfileSet": {
+        "profile": "Mon profil",
+        "log_out": "Se déconnecter"
+    },
+    "Update": {
+        "update": "Mettez à jour vos informations de compte",
+        "bank": "Banque",
+        "mobile_wallet": "Portefeuille mobile",
+        "mpesa": "Mpesa",
+        "submit": "SOUMETTRE"
+    },
+    "Footer": {
+        "copyright": "© 2024 Votre application. Tous droits réservés."
+    },
+    "Status": {
+        "thankyou": "Merci",
+        "status_message": "Vos informations de compte ont été mises à jour avec succès"
+    },
+    "Profile": {
+        "name": "Nom",
+        "ph_no": "Numéro de téléphone",
+        "email": "Email",
+        "dob": "Date de naissance",
+        "gender": "Genre",
+        "add": "Adresse"
+    },
+    "login": {
+        "title": "Registre de compte de paiements sociaux",
+        "description": "Le SPAR offre un portail orienté utilisateur pour ajouter et mettre à jour les détails du compte FSP après authentification",
+        "button Text": "PROCÉDER AVEC LA CARTE D'IDENTITÉ NATIONALE"
+    }
+}

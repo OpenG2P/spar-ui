@@ -8,6 +8,7 @@ export type FormLevel = {
 };
 
 export type FormLevelValue = {
+  image: any;
   id: number;
   name: string;
   code: string;

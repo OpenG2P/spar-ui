@@ -1,5 +1,6 @@
-import {AuthUtil} from "../components/auth";
 
-export default async function Root() {
-  return <AuthUtil successRedirectUrl="/home" failedRedirectUrl="/login" />;
+import { redirect } from 'next/navigation';
+
+export default function RootPage() {
+  redirect('/en');
 }

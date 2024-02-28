@@ -1,0 +1,41 @@
+{
+  "NotFoundPage": {
+    "title": "Hindi Natagpuang Pahina",
+    "description": "Oops! Mukhang napadpad ka sa isang pahinang hindi umiiral. Huwag mag-alala, ang ating mahiwagang internationalization ay patuloy na nagtatrabaho sa ibang bahagi ng app. Huwag mag-atubiling bumalik para mas tuklasin!"
+  },
+  "Navigation": {
+    "support": "Suporta",
+    "contact": "kontakto"
+  },
+  "ProfileSet": {
+    "profile": "Aking Profile",
+    "log_out": "Mag-logout"
+  },
+  "Update": {
+    "update": "I-update ang iyong impormasyon sa account",
+    "bank": "Bangko",
+    "mobile_wallet": "Mobile Wallet",
+    "mpesa": "Mpesa",
+    "submit": "ISUMITE"
+  },
+  "Footer": {
+    "copyright": "© 2024 Ang Iyong App. Lahat ng karapatan ay nakalaan."
+  },
+  "Status": {
+    "thankyou": "Salamat",
+    "status_message": "Matagumpay na Na-update ang Iyong Impormasyon sa Account"
+  },
+  "Profile": {
+    "name": "Pangalan",
+    "ph_no": "Numero ng Telepono",
+    "email": "Email",
+    "dob": "Petsa ng Kapanganakan",
+    "gender": "Kasarian",
+    "add": "Address"
+  },
+  "login": {
+    "title": "Rehistro ng Social Payments Account",
+    "description": "Ang SPAR ay nag-aalok ng isang user-facing portal para sa pagdagdag at pag-update ng mga detalye ng FSP account matapos ang pag-authenticate",
+    "button Text": "MAGPATULOY GAMIT ANG NATIONAL ID"
+  }
+}
