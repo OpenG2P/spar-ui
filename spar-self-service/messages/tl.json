@@ -5,7 +5,7 @@
   },
   "Navigation": {
     "support": "Suporta",
-    "contact": "kontakto"
+    "contact": "Kontakto"
   },
   "ProfileSet": {
     "profile": "Aking Profile",
@@ -35,7 +35,14 @@
   },
   "login": {
     "title": "Rehistro ng Social Payments Account",
-    "description": "Ang SPAR ay nag-aalok ng isang user-facing portal para sa pagdagdag at pag-update ng mga detalye ng FSP account matapos ang pag-authenticate",
-    "button Text": "MAGPATULOY GAMIT ANG NATIONAL ID"
+    "description_1": "Ang SPAR ay nagbibigay ng portal na hinaharap ng user para sa pagdagdag at pag-update",
+    "description_2": "ng mga detalye ng FSP account matapos ang pag-authenticate",
+    "button_text": "MAGPATULOY GAMIT ANG NATIONAL ID"
+  },
+  "home": {
+    "title": "Ang impormasyon ng iyong account",
+    "description": "Wala kang nakatalagang address ng account para sa programa ng mga benepisyaryo. Mangyaring i-update ang iyong mga detalye bilang benepisyaryo kung saan mo nais na matanggap ang cash benefits.",
+    "button_text": "I-UPDATE ANG MGA DETALYE NG INYONG ACCOUNT",
+    "button_text2": "I-UPDATE"
   }
 }

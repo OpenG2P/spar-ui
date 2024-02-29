@@ -6,7 +6,7 @@
   },
   "Navigation": {
     "support": "Support",
-    "contact":"contact"
+    "contact":"Contact"
     
   },
   "ProfileSet": {
@@ -38,7 +38,16 @@
     },
   "login":{
     "title":" Social Payments Account Registry",
-    "description":"The SPAR offers a user-facing portal for adding & updating FSP account details after authentication",
-    "button Text":"PROCEED WITH NATIONAL ID"
+    "description_1":"The SPAR offers a user-facing portal for adding & updating",
+    "description_2":"FSP account details after authentication",
+    "button_text":"PROCEED WITH NATIONAL ID"
+  },
+  "home": {
+    "title": " Your account information",
+    "description": "You don't have an account address mapped to the beneficiary program. Please update your beneficiary details where you would like to receive the cash benefits.",
+    "button_text": "UPDATE YOUR ACCOUNT DETAILS",
+    "button_text2": "UPDATE"
   }
+  
+  
 }

@@ -11,7 +11,7 @@ export default function Next() {
 
   return (
     <main>
-      {/* <AuthUtil failedRedirectUrl="/login" /> */}
+      <AuthUtil failedRedirectUrl={`/${localActive}/login`}/>
       <div className="flex flex-row">
         <div className="h-screen bg-gray-100 basis-1/2">
           <div className="m-24">

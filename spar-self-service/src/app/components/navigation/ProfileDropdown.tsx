@@ -30,7 +30,7 @@ export default function ProfileDropDown(): JSX.Element {
       method: "POST",
     }).finally(() => {
       authContext.profile = null;
-      router.replace("/login");
+      router.push("/en/login");
     });
   };
 

@@ -5,7 +5,7 @@
     },
     "Navigation": {
         "support": "Support",
-        "contact": "contact"
+        "contact": "Contact"
     },
     "ProfileSet": {
         "profile": "Mon profil",
@@ -33,9 +33,17 @@
         "gender": "Genre",
         "add": "Adresse"
     },
-    "login": {
-        "title": "Registre de compte de paiements sociaux",
-        "description": "Le SPAR offre un portail orienté utilisateur pour ajouter et mettre à jour les détails du compte FSP après authentification",
-        "button Text": "PROCÉDER AVEC LA CARTE D'IDENTITÉ NATIONALE"
+   "login": {
+    "title": "Registre de compte de paiements sociaux",
+    "description_1": "Le SPAR offre un portail orienté utilisateur pour ajouter et mettre à jour",
+    "description_2": "les détails du compte FSP après authentification",
+    "button_text": "PROCÉDER AVEC LA CARTE D'IDENTITÉ NATIONALE"
+},
+    "home": {
+        "title": "Vos informations de compte",
+        "description": "Vous n'avez pas d'adresse de compte associée au programme bénéficiaire. Veuillez mettre à jour vos informations de bénéficiaire pour recevoir les avantages en espèces.",
+        "button_text": "METTEZ À JOUR VOS DÉTAILS DE COMPTE",
+        "button_text2": "METTRE À JOUR"
     }
+    
 }

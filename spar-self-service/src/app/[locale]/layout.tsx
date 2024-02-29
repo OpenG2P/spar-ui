@@ -4,6 +4,7 @@ import { Header } from "../components";
 import type {Metadata} from "next";
 import { Roboto } from "next/font/google";
 import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { AuthProvider } from "../store/auth-context";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -32,10 +33,11 @@ export default function RootLayout({
     <html lang={locale}>
       <body className={roboto.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <AuthProvider>
           <Header />
           <main>{children}</main>
+        </AuthProvider>
         </NextIntlClientProvider>
-        
       </body>
     </html>
   );

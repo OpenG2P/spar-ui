@@ -85,7 +85,7 @@ export default function LocalSwitcher() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute flex-col right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 ring-gray-400  focus:outline-none">
+        <Menu.Items className="absolute flex-col right-0  z-10 mt-2 w-56 origin-top-right rounded-md bg-white ring-1 ring-gray-400  focus:outline-none">
           <div className="py-1 flex-col items-center">
             {languageOptions.map((option) => (
               <Menu.Item key={option.value}>
@@ -95,7 +95,7 @@ export default function LocalSwitcher() {
                       onSelectChange({target: {value: option.value}} as ChangeEvent<HTMLSelectElement>)
                     }
                     className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                      active ? "bg-gray-100 w-full text-gray-900" : "text-gray-700",
                       "px-4 py-2 text-sm flex items-center gap-2"
                     )}
                   >

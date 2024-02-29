@@ -2,12 +2,13 @@ import Image from "next/image";
 import { AuthUtil } from "@/app/components/auth";
 import { useLocale } from 'next-intl';
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 export default function Next() {
     const localActive = useLocale();
     const t = useTranslations('Status')
     return (
         <main>
-            <AuthUtil failedRedirectUrl="/login" />
+            <AuthUtil failedRedirectUrl={`/${localActive}/login`} />
             <div className="flex flex-row">
                 <div className="h-screen bg-gray-100 basis-1/2">
                     <div className="m-24">
@@ -37,13 +38,15 @@ export default function Next() {
                                                 />
                                                 <p className="text-2xl text-green-600 mt-2">{t('thankyou')}</p>
                                                 <p className="text-gray-800">{t('status_message')}</p>
-                                                <Image
-                                                    className="ml-48 mt-4"
-                                                    src="http://spar.openg2p.my/spar/img/arrow_02.png"
-                                                    alt="person"
-                                                    width={50}
-                                                    height={50}
-                                                />
+                                                <Link href={`/${localActive}/home`} className="text-white text-sm">
+                                                    <Image
+                                                        className="ml-48 mt-4"
+                                                        src="http://spar.openg2p.my/spar/img/arrow_02.png"
+                                                        alt="person"
+                                                        width={50}
+                                                        height={50}
+                                                    />
+                                               </Link>
                                            </div>
                                         </div>
                                     </div>

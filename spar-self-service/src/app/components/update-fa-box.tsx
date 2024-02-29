@@ -1,8 +1,6 @@
 
 "use client";
 import Select from "react-select";
-import { Button, CircularProgress, MenuItem, TextField } from "@mui/material";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { useEffect, useState } from "react";
 import { prefixBaseApiPath } from "../../utils/path";
 import { getFa } from "../../utils/getFa";
@@ -11,6 +9,8 @@ import { useLocale } from 'next-intl';
 import { FormLevel, FormLevelValue, KeyValue } from "../../types/dfsp-levels";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 type UpdateFaBoxProps = {
   levelindex: number;
   parent: number;
@@ -22,12 +22,19 @@ type State = {
 
 export default function UpdateFaBox(
 ) {
+
+  const localActive = useLocale();
+  const t = useTranslations('Update')
+
+
   const [subTab, setSubTab] = useState("subTab1");
   const [formData, setFormData] = useState<State>({ choices: [], levels: [] });
-  const localActive = useLocale();
   //  0 - empty/default. 1 - update form. 2 - loading. 3 - succ. 4 - fail.
   const [renderState, setRenderState] = useState(0);
   var alreadyLinked = false;
+  const router = useRouter();
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
+  
 
 
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
@@ -84,17 +91,54 @@ export default function UpdateFaBox(
       const localFormData = structuredClone(formData);
       fetchLevelsAndRender(localFormData, 0, 1);
     } else {
+      let emailIsValid = true;
+      let phoneIsValid = true;
+      let accIsValid = true;
+      formData.levels.forEach((x, i) => {
+        if (x.name === 'Email') {
+          const emailValue = formData.choices[i]?.value;
+          if (!emailValue.includes('@')) {
+            emailIsValid = false;
+          }
+        }
+        if (x.code === 'phone') {
+          const phoneValue = formData.choices[i]?.value;
+          if (phoneValue.length !== 10) {
+            phoneIsValid = false;
+          }
+        }
+        if (x.code === 'account_no') {
+          const accValue = formData.choices[i]?.value;
+          if (accValue.length < 10) {
+            accIsValid = false;
+          }
+        }
+      });
+      if (!emailIsValid || !phoneIsValid|| !accIsValid) {
+        setEmailIsInvalid(!emailIsValid);
+        setRenderState(1);
+        if (!emailIsValid) {
+          window.alert('Please enter a valid email address.');
+        }
+        if (!phoneIsValid) {
+          window.alert('Please enter a valid 10-digit phone number.');
+        }
+        if (!accIsValid) {
+          window.alert('Please enter a valid Account number.');
+        }
+        console.log("entereed")
+        return;
+      }
       const updateFaSuccess = (res: any) => {
         if (res.status === "succ") {
-          console.log("Form Data upon submission:", formData); // Add this line
+          console.log("Form Data upon submission:", formData);
           setRenderState(3);
+          router.push(`/${localActive}/status`);
         } else {
-          // TODO: Raise Error
           console.log("Received failure on update FA", res);
         }
       };
       const updateFaFailure = (res: any, err: any) => {
-        // TODO: Raise Error
         console.log("Received Error while updating FA", res, err);
       };
       if (alreadyLinked) {
@@ -173,24 +217,28 @@ export default function UpdateFaBox(
 
   return (
     <>
-      <div className="container w-max-auto">
+      <div className="container ">
         {renderState === 1 && (
           <div className="row">
             {formData.levels.length > 0 && (
               <>
-                <div className="mt-4 text-sm">{formData.levels[0].name}</div>
+                <div className="mt-4 text-black text-sm">{formData.levels[0].name}</div>
                 <div className="flex flex-col gap-4 mt-2">
                   <div className="flex flex-row gap-4">
                     {formData.levels[0].options?.map((option, j) => (
                       <div key={`option-${j}`}>
-                        <div className="flex flex-row gap-4">
+                        <div className="flex flex-row gap-8">
                           <div
-                            className={`border-2 border-gray-500 rounded-md w-24 h-24 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-sky-500 hover:shadow-lg ${subTab === `subTab${j + 1}` ? 'border-sky-500' : ''}`}
+                            className={`border-2 border-gray-300 rounded-md w-24 h-24 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-sky-500 hover:shadow-lg ${subTab === `subTab${j + 1}` ? 'border-sky-500' : ''}`}
                             onClick={() => handleTabClick(`subTab${j + 1}`, option.next_level_id, option.id)}
                           >
                             <div className="flex flex-col m-6 mt-4">
-                              <Image className="w-10 h-10 square-full" src={`http://spar.openg2p.my/spar/img/${option.code}.png`} alt={option.name} width={50} height={50} />
-                              <p className="text-center text-gray-600 text-xs  ">{option.name}</p>
+                              <Image className={`w-10 h-10 square-full ${subTab === `subTab${j + 1}` ? 'opacity-100' : 'opacity-30'
+                                }`}  src={`http://spar.openg2p.my/spar/img/${option.code}.png`} alt={option.name} width={50} height={50} />
+                              <p
+                                className={`text-center text-xs ${subTab === `subTab${j + 1}` ? 'text-sky-500' : 'text-gray-400'
+                                  }`}
+                              >{option.name}</p>
                             </div>
                           </div>
                         </div>
@@ -206,7 +254,7 @@ export default function UpdateFaBox(
                             {i > 0 && (
                               x.level >= 0 ? (
                                 <div>
-                                  <label className="text-sm">{x.name}</label>
+                                  <label className=" text-black text-sm">{x.name}</label>
                                   <select
                                     className="w-full border-t-2 p-3 border border-gray-500 shadow-md rounded-md bg-white"
                                     onChange={(event) => onFieldChange(i, event.target.value)}
@@ -222,13 +270,29 @@ export default function UpdateFaBox(
                                 </div>
                               ) : (
                                 <div>
-                                  <label className="text-sm">{x.name}</label>
+                                  <label className="text-sm text-black">{x.name}</label>
                                   <input
                                     type="text"
-                                    className="w-full p-2 mt-1 border rounded-md"
+                                    className="w-full p-2 mt-1  rounded-md border"
+                                   
                                     onChange={(event) => onFieldChange(i, event.target.value)}
-                                    value={formData.choices[i]?.value}
+                                    value={formData.choices[i]?.value || ''}
                                   />
+                                    
+
+                                  {/* <div className="border border-red">{emailIsInvalid && <p>Please Enter Valid Email</p>}</div> */}
+                                  {x.name === 'Email' && !formData.choices[i]?.value.includes('@') && (
+                                    <p className="text-sm text-red-500">Please Enter Valid {x.name}</p>
+                                  )}
+                                  {x.code === 'phone' && formData.choices[i]?.value.length !== 10 && (
+                                    <p className="text-sm text-red-500">Phone number must be 10 digits</p>
+                                  )}
+                                    {x.code === 'account_no' && formData.choices[i]?.value.length < 10 && (
+                                    <p className="text-sm text-red-500">Please select a {x.name}</p>
+                                  )}
+                                 
+
+
                                 </div>
                               )
                             )}
@@ -237,32 +301,23 @@ export default function UpdateFaBox(
                       </div>
                     )
                   ))}
-                  
+
                 </div>
               </>
             )}
           </div>
         )}
-
-        {renderState === 2 && (
-          <div className="row flex justify-content-center">
-            <div className="mx-auto my-10">
-              <CircularProgress />
-            </div>
-          </div>
+        {renderState === 4 && (
+          <>
+          
+          </>
         )}
 
-        {renderState === 3 && (
-          <div className="row flex justify-content-center">
-            <div className="mx-auto my-10">
-              <CheckCircleOutlineIcon sx={{ scale: '1.8' }} fontSize="large" color="success" />
-            </div>
-          </div>
-        )}
+
 
         <div className="flex flex-row gap-4">
-          <button className="inline-block mt-10 bg-black rounded-3xl w-1/2 text-center p-1 shadow-md hover:bg-yellow-700"  onClick={() => updateFaSubmit()}><Link href={`/${localActive}/status`} className="text-white text-sm">
-            SUBMIT
+          <button className="inline-block mt-10 bg-black rounded-3xl w-1/2 text-center p-1 shadow-md hover:bg-yellow-700" onClick={() => updateFaSubmit()}><Link href={`/${localActive}/status`} className="text-white text-sm">
+            {t('submit')}
           </Link></button>
 
           <div className="inline-block mt-10 border border-gray-500 rounded-3xl w-1/2 text-center p-1 shadow-md hover:bg-yellow-700">
@@ -275,6 +330,9 @@ export default function UpdateFaBox(
     </>
   );
 }
+
+
+
 
 
 

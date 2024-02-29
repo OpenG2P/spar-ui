@@ -4,20 +4,27 @@ import {Button, CircularProgress, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import {getFa} from "@/utils/getFa";
 import {KeyValue} from "@/types/dfsp-levels";
-import {authContext} from "./auth";
+import { useAuth } from "../store/auth-context";
 import Link from "next/link";
 import { useLocale } from 'next-intl';
 import Image from "next/image";
-export default function GetFaBox() {
+import { useTranslations } from "next-intl";
 
+
+export default function GetFaBox() {
+  const { getFaRaw } = useAuth(); 
   const localActive = useLocale();
   const [getFaResult, setGetFaResult] = useState<string | KeyValue[]>("");
   // 0 - default/empty. 1 - loading. 2 - output. 3 - error.
   const [renderState, setRenderState] = useState(0);
+  const t = useTranslations('home')
+
   useEffect(() => {
     // Call getFa when the component mounts
     onClick();
   }, []); 
+
+
   function onClick() {
     setRenderState(1);
     getFa(
@@ -28,10 +35,12 @@ export default function GetFaBox() {
             setRenderState(2);
           } else {
             // TODO: Raise Error
+            setRenderState(2);
             console.log("Received success without FA on get FA", res);
           }
         } else {
           // TODO: Render NOT LINKED
+          
           console.log("Received failure on get FA", res);
         }
       },
@@ -39,7 +48,8 @@ export default function GetFaBox() {
         // TODO: Raise Error
         console.log("Received Error checking for get FA status", res, err);
       },
-      !authContext.getFaRaw
+      // !authContext.getFaRaw
+      !getFaRaw
     );
   }
 
@@ -55,25 +65,28 @@ export default function GetFaBox() {
           </div>
         </div>
       )}
-        {renderState === 2 && (!getFaResult || (Array.isArray(getFaResult) && getFaResult.length === 0)) && (
+        {renderState === 2 && (!getFaResult || !Array.isArray(getFaResult) || getFaResult.length === 0) && (
           <div className="row flex justify-content-center">
             <div className="flex flex-col">
-              <div className="text-sky-500 text-2xl">Welcome to Spar</div>
+              <div className="text-sky-500 text-2xl">{t('title')}</div>
               <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
-              <p className="text-gray-800 mt-4 text-md">You don't have an account address mapped to the beneficiary program. Please update your beneficiary details where you would like to receive the cash benefits.</p>
+              <p className="text-gray-800 mt-4 text-md">
+                {t('description')}
+              </p>
               <div className="bg-black rounded-3xl w-full h-12 shadow-md hover:bg-yellow-700 mt-6 flex items-center justify-center">
                 <Link href={`/${localActive}/update`} className="text-white text-sm">
-                  UPDATE YOUR ACCOUNT DETAILS
+                  {t('button_text')}
                 </Link>
               </div>
             </div>
           </div>
         )}
 
+
         {renderState === 2 && getFaResult && Array.isArray(getFaResult) && getFaResult.length > 0 &&(
           <ul className="w-full">
             <div className="flex flex-col">
-              <div className="text-sky-500 text-2xl" >Your account information</div>
+              <div className="text-sky-500 text-2xl" >{t('title')}</div>
               <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
             </div>
             {getFaResult.slice().reverse().map((x, i) => (
@@ -91,16 +104,16 @@ export default function GetFaBox() {
                     <div className="text-sm font-medium text-gray-600 no-underline">
                       {x.key}
                     </div>
-                    <p className="text-md text-black font-bold">
+                    <p className="text-md text-black font-semibold mx-auto">
                       {x.value}
                     </p>
                   </div>
                 </div>
               </li>
             ))}
-            <div className="inline-block bg-black rounded-3xl  w-1/2 text-center p-1 shadow-md hover:bg-yellow-700 mt-6">
+            <div className="inline-block bg-black rounded-3xl  p-2 w-1/2 text-center p-1 shadow-md hover:bg-yellow-700 mt-6">
               <Link href={`/${localActive}/update`} className="text-white text-sm">
-                UPDATE
+                {t('button_text2')}
               </Link>
             </div>
           </ul>

@@ -1,10 +1,14 @@
-"use client";
 
-import {useRouter} from "next/navigation";
-import {prefixBaseApiPath} from "@/utils/path";
-import {useEffect} from "react";
+"use client";
+import { useRouter } from "next/navigation";
+import { prefixBaseApiPath } from "@/utils/path";
+import { useEffect } from "react";
 import { usePathname } from 'next/navigation';
 import { useLocale } from 'next-intl';
+
+import { useAuth } from "../store/auth-context";
+
+
 // TODO: Try to use context or state
 export const authContext: {
   profile?: null | {
@@ -21,51 +25,46 @@ export const authContext: {
     phone_number?: string;
   };
   getFaRaw: boolean;
-} = {profile: null, getFaRaw: process.env.NEXT_PUBLIC_DEFAULT_GET_FA_RAW == "true" || false};
+} = { profile: null, getFaRaw: process.env.NEXT_PUBLIC_DEFAULT_GET_FA_RAW == "true" || false };
 
-export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl?: string}) {
+export function AuthUtil(params: { successRedirectUrl?: string; failedRedirectUrl?: string }) {
+
+  const { profile, setProfile } = useAuth();
   const { push, replace } = useRouter();
-  const currentPath = usePathname();
-  const localActive = useLocale();
 
   function checkAndRedirect() {
-    const availableLocales = ['en', 'fr', 'tl'];
-    const locale = availableLocales.includes(localActive) ? localActive : 'en';
-
     if (params.successRedirectUrl && authContext.profile) {
       return push(params.successRedirectUrl);
     } else if (params.failedRedirectUrl && !authContext.profile) {
-      const failedRedirectUrl = params.failedRedirectUrl ? `/${locale}${params.failedRedirectUrl}` : undefined;
-      return replace(params.failedRedirectUrl); // Ensure initial language path is preserved
+      return replace(params.failedRedirectUrl);
     }
   }
 
 
   useEffect(() => {
-    fetch(prefixBaseApiPath("/auth/profile"))
+    fetch(prefixBaseApiPath('/auth/profile'))
       .then((res) => {
         if (res.ok) {
           res
             .json()
             .then((resJson) => {
               authContext.profile = resJson;
+              setProfile(resJson);
             })
             .catch((err) => {
-              console.log("Error Getting profile json", err);
+              console.log('Error Getting profile json', err);
             })
             .finally(checkAndRedirect);
         } else {
-          console.log("Error Getting profile, res not ok");
+          console.log('Error Getting profile, res not ok');
           checkAndRedirect();
         }
       })
       .catch((err) => {
-        console.log("Error Getting profile", err);
+        console.log('Error Getting profile', err);
         checkAndRedirect();
       });
-    // TODO: Find better way. Disable dependency error for now
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    
   }, []);
+
   return <></>;
 }

@@ -3,7 +3,8 @@ import Image from "next/image";
 import { useEffect, useState} from "react";
 import {prefixBaseApiPath} from "@/utils/path";
 import Link from "next/link";
-
+import { useLocale } from 'next-intl';
+import { useTranslations } from "next-intl";
 type LoginProvider = {
   id: number;
   name: string;
@@ -15,6 +16,9 @@ type LoginProvider = {
 export default function LoginBox() {
 
   const [loginProviders, setLoginProviders] = useState<LoginProvider[]>([]);
+  const localActive = useLocale();
+  const t= useTranslations('login')
+
 
   function getLoginProviders() {
     fetch(prefixBaseApiPath(`/auth/getLoginProviders`)).then((res) => {
@@ -29,11 +33,11 @@ export default function LoginBox() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="text-center p-8 m-8">
         <div className="text-sky-500 text-3xl p-2">
-          Social Payments Account Registry
+          {t('title')}
         </div>
         <div className="">
-          <div>The SPAR offers a user-facing portal for adding & updating</div>
-          <div>FSP account details after authentication.</div>
+          <div>{t('description_1')}</div>
+          <div>{t('description_2')}</div>
         </div>
         {loginProviders &&
           loginProviders.length !== 0 &&
@@ -48,7 +52,7 @@ export default function LoginBox() {
                 )}
                 className="text-white font-bold text-xl p-4"
               >
-                PROCEED WITH NATIONAL ID
+                {t('button_text')}
               </a>
                           
             </div>
