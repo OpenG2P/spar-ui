@@ -109,7 +109,7 @@ export default function UpdateFaBox(
         }
         if (x.code === 'account_no') {
           const accValue = formData.choices[i]?.value;
-          if (accValue.length < 10) {
+          if (accValue.length !== 10) {
             accIsValid = false;
           }
         }
