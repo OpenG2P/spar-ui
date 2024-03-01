@@ -24,14 +24,14 @@ export default function LocalSwitcher() {
   const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const nextLocale = e.target.value as "en" | "fr" | "tl";
     startTransition(() => {
-      
+
       const newPath = `/${nextLocale}${currentPath.substring(3)}`;
       router.replace(newPath);
     });
   };
 
 
-  const getFlagImage = (locale: "en" | "fr" |"tl") => {
+  const getFlagImage = (locale: "en" | "fr" | "tl") => {
     const flagImages = {
       en: "http://spar.openg2p.my/spar/img/flag_en.png",
       fr: "http://spar.openg2p.my/spar/img/flag_fr.png",
@@ -51,15 +51,15 @@ export default function LocalSwitcher() {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="flex justify-between items-center w-full gap-x-2 px-2 py-2 text-sm text-black hover:bg-gray-50">
-          <Image src={getFlagImage(localActive)} alt={localActive}   width={20} height={20} />
+          <Image src={getFlagImage(localActive)} alt={localActive} width={20} height={20} />
 
           <span>{localActive === "en" ? "English" : localActive === "fr" ? "French" : "Filipino"}</span>
           <Image
-            className="w-4 h-4 mr-2"
+            className="w-3 h-3 mr-2"
             src="http://spar.openg2p.my/spar/img/down_arrow.png"
             alt="person"
-            width={600}
-            height={600}
+            width={60}
+            height={60}
           />
           <select
             value={localActive}
@@ -89,17 +89,17 @@ export default function LocalSwitcher() {
           <div className="py-1 flex-col items-center">
             {languageOptions.map((option) => (
               <Menu.Item key={option.value}>
-                {({active}) => (
+                {({ active }) => (
                   <button
                     onClick={() =>
-                      onSelectChange({target: {value: option.value}} as ChangeEvent<HTMLSelectElement>)
+                      onSelectChange({ target: { value: option.value } } as ChangeEvent<HTMLSelectElement>)
                     }
                     className={classNames(
                       active ? "bg-gray-100 w-full text-gray-900" : "text-gray-700",
                       "px-4 py-2 text-sm flex items-center gap-2"
                     )}
                   >
-                    <img src={getFlagImage(option.value)} alt={option.value} />
+                    <Image src={getFlagImage(option.value)} alt={option.value} width={20} height={20} />
                     <span>{option.label}</span>
                   </button>
                 )}
@@ -113,5 +113,5 @@ export default function LocalSwitcher() {
 }
 
 
-      
-      
+
+
