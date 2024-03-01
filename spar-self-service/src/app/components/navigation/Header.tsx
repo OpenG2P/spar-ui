@@ -40,10 +40,6 @@ export default function Header() {
                   <ProfileDropDown />
                 </div>
               )}
-              {/* <div className="flex flex-row">
-                <div className="mt-5">Hello, David</div>
-                <ProfileDropDown />
-              </div> */}
             </div>
           </div>
         </nav>

@@ -39,7 +39,6 @@ export default function UpdateFaBox(
   const [emailIsInvalid, setEmailIsInvalid] = useState(false);
 
 
-
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
       arr.push(value);
@@ -48,7 +47,6 @@ export default function UpdateFaBox(
       arr.length = index + 1;
     }
   }
-
 
   function fetchLevelsAndRender(
     localFormData: State,
@@ -99,7 +97,7 @@ export default function UpdateFaBox(
       let accIsValid = true;
       formData.levels.forEach((x, i) => {
         if (x.name === 'Email') {
-          const emailValue = formData.choices[i]?.value;
+          const emailValue = String(formData.choices[i]?.value);
           if (emailValue.length === 0 || !emailValue.includes('@')) {
             emailIsValid = false;
           }
@@ -112,7 +110,7 @@ export default function UpdateFaBox(
           }
         }
         if (x.code === 'account_no') {
-          const accValue = formData.choices[i]?.value;
+          const accValue = String(formData.choices[i]?.value);
           if (accValue.length === 0 || accValue.length !== 10) {
             accIsValid = false;
           }

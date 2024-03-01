@@ -111,7 +111,7 @@ export default function GetFaBox() {
                 </div>
               </li>
             ))}
-            <div className="inline-block bg-black rounded-3xl  p-2 w-1/2 text-center p-1 shadow-md hover:bg-yellow-700 mt-6">
+            <div className="inline-block bg-black rounded-3xl  p-2 w-1/2 text-center shadow-md hover:bg-yellow-700 mt-6">
               <Link href={`/${localActive}/update`} className="text-white text-sm">
                 {t('button_text2')}
               </Link>
