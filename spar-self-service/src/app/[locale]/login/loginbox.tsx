@@ -2,8 +2,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { prefixBaseApiPath } from "@/utils/path";
-import Link from "next/link";
-import { useLocale } from 'next-intl';
 import { useTranslations } from "next-intl";
 type LoginProvider = {
   id: number;
@@ -16,7 +14,6 @@ type LoginProvider = {
 export default function LoginBox() {
 
   const [loginProviders, setLoginProviders] = useState<LoginProvider[]>([]);
-  const localActive = useLocale();
   const t = useTranslations('login')
 
 

@@ -1,6 +1,6 @@
 "use client";
 
-import {Button, CircularProgress, TextField} from "@mui/material";
+import {CircularProgress, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import {getFa} from "@/utils/getFa";
 import {KeyValue} from "@/types/dfsp-levels";
@@ -20,7 +20,6 @@ export default function GetFaBox() {
   const t = useTranslations('home')
 
   useEffect(() => {
-    // Call getFa when the component mounts
     onClick();
   }, []); 
 
@@ -34,21 +33,19 @@ export default function GetFaBox() {
             setGetFaResult(res.fa);
             setRenderState(2);
           } else {
-            // TODO: Raise Error
+            
             setRenderState(2);
             console.log("Received success without FA on get FA", res);
           }
         } else {
-          // TODO: Render NOT LINKED
           
           console.log("Received failure on get FA", res);
         }
       },
       (res, err) => {
-        // TODO: Raise Error
+        
         console.log("Received Error checking for get FA status", res, err);
       },
-      // !authContext.getFaRaw
       !getFaRaw
     );
   }

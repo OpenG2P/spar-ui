@@ -3,7 +3,7 @@
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useTransition } from 'react';
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 
@@ -51,11 +51,11 @@ export default function LocalSwitcher() {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="flex justify-between items-center w-full gap-x-2 px-2 py-2 text-sm text-black hover:bg-gray-50">
-          <img src={getFlagImage(localActive)} alt={localActive} className="w-4 h-4 mr-2" />
+          <Image src={getFlagImage(localActive)} alt={localActive}   width={20} height={20} />
 
           <span>{localActive === "en" ? "English" : localActive === "fr" ? "French" : "Filipino"}</span>
           <Image
-            className="object-cover w-full h-full"
+            className="w-4 h-4 mr-2"
             src="http://spar.openg2p.my/spar/img/down_arrow.png"
             alt="person"
             width={600}

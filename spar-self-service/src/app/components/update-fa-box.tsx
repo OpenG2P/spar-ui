@@ -1,7 +1,5 @@
 
 "use client";
-
-import Select from "react-select";
 import { useEffect, useState } from "react";
 import { prefixBaseApiPath } from "../../utils/path";
 import { getFa } from "../../utils/getFa";
