@@ -1,20 +1,20 @@
-import { Suspense } from "react";
+import {Suspense} from "react";
 import Image from "next/image";
-import { AuthUtil } from "@/app/components/auth";
-import { GetFaBox } from "@/app/components";
-import { useLocale } from 'next-intl';
+import {AuthUtil} from "@/app/components/auth";
+import {GetFaBox} from "@/app/components";
+import {useLocale} from "next-intl";
 import Loading from "../loading";
 export default function Next() {
   const localActive = useLocale();
   return (
     <main>
-      <AuthUtil failedRedirectUrl={`/${localActive}/login`}/>
+      <AuthUtil failedRedirectUrl={`/${localActive}/login`} />
       <div className="flex flex-row">
         <div className="h-screen bg-gray-100 basis-1/2">
           <div className="m-24">
             <Image
               className="object-cover w-full h-full"
-              src="http://spar.openg2p.my/spar/img/infographic_02.png"
+              src="/img/infographic_02.png"
               alt="person"
               width={600}
               height={600}
@@ -27,11 +27,11 @@ export default function Next() {
               <div className="flex justify-center">
                 <nav className=" flex overflow-x-auto items-center p-1 text-xl text-gray-600 bg-white rounded-3xl">
                   <div className="mt-8">
-                      <div className="block w-full max-w-[18rem] mt-6 rounded-lg bg-white ">
-                        <Suspense fallback={<Loading/>}>
+                    <div className="block w-full max-w-[18rem] mt-6 rounded-lg bg-white ">
+                      <Suspense fallback={<Loading />}>
                         <GetFaBox />
-                        </Suspense>
-                      </div>
+                      </Suspense>
+                    </div>
                   </div>
                 </nav>
               </div>
@@ -42,5 +42,3 @@ export default function Next() {
     </main>
   );
 }
-
-

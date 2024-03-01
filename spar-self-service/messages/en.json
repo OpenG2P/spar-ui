@@ -1,46 +1,44 @@
 {
-
   "NotFoundPage": {
     "title": "Page Not Found",
     "description": "Oops! It seems like you've stumbled upon a page that doesn't exist. Don't worry, our internationalization magic is still hard at work on other parts of the app. Feel free to navigate back to explore more!"
   },
   "Navigation": {
     "support": "Support",
-    "contact":"Contact"
-    
+    "contact": "Contact"
   },
   "ProfileSet": {
-      "profile": "My profile",
-      "log_out":"Log out"
-    },
+    "profile": "My profile",
+    "log_out": "Log out"
+  },
 
   "Update": {
     "update": "Update your account information",
-    "bank":"Bank",
-    "mobile_wallet":"Mobile Wallet",
-    "mpesa":"Mpesa",
-    "submit":"SUBMIT"
+    "bank": "Bank",
+    "mobile_wallet": "Mobile Wallet",
+    "mpesa": "Mpesa",
+    "submit": "SUBMIT"
   },
   "Footer": {
     "copyright": "© 2024 Your App. All rights reserved."
   },
   "Status": {
-      "thankyou": "Thank You",
-      "status_message":"Your account Information Updated Successfully"
-    },
+    "thankyou": "Thank You",
+    "status_message": "Your account Information Updated Successfully"
+  },
   "Profile": {
-      "name": "Name",
-      "ph_no":"Phone Number",
-      "email":"Email",
-      "dob":"Date of Birth",
-      "gender":"Gender",
-      "add":"Address"
-    },
-  "login":{
-    "title":" Social Payments Account Registry",
-    "description_1":"The SPAR offers a user-facing portal for adding & updating",
-    "description_2":"FSP account details after authentication",
-    "button_text":"PROCEED WITH NATIONAL ID"
+    "name": "Name",
+    "ph_no": "Phone Number",
+    "email": "Email",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "add": "Address"
+  },
+  "login": {
+    "title": " Social Payments Account Registry",
+    "description_1": "The SPAR offers a user-facing portal for adding & updating",
+    "description_2": "FSP account details after authentication",
+    "button_text": "PROCEED WITH NATIONAL ID"
   },
   "home": {
     "title": " Your account information",
@@ -48,6 +46,4 @@
     "button_text": "UPDATE YOUR ACCOUNT DETAILS",
     "button_text2": "UPDATE"
   }
-  
-  
 }
