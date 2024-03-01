@@ -12,11 +12,19 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@headlessui/react": "^1.7.18",
     "@mui/icons-material": "^5.14.13",
     "@mui/material": "^5.14.12",
+    "@next/font": "^14.1.0",
+    "loadash": "^1.0.0",
+    "mdb-react-ui-kit": "^7.2.0",
     "next": "13.5.4",
+    "next-intl": "^3.9.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-select": "^5.8.0",
     "swr": "^2.2.4"
   },
   "devDependencies": {
