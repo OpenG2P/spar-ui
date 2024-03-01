@@ -5,11 +5,9 @@ import Image from 'next/image';
 import ProfileDropDown from './ProfileDropdown';
 import { useTranslations } from 'next-intl';
 import LocalSwitcher from './local-switcher';
-import { useLocale } from 'next-intl';
 import { useAuth } from '../../store/auth-context';
 
 export default function Header() {
-  const localActive = useLocale();
   const t = useTranslations('Navigation');
   const { profile } = useAuth();
   

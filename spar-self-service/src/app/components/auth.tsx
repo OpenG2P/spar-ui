@@ -3,13 +3,10 @@
 import { useRouter } from "next/navigation";
 import { prefixBaseApiPath } from "@/utils/path";
 import { useEffect } from "react";
-import { usePathname } from 'next/navigation';
-import { useLocale } from 'next-intl';
+
 
 import { useAuth } from "../store/auth-context";
 
-
-// TODO: Try to use context or state
 export const authContext: {
   profile?: null | {
     sub?: string;

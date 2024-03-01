@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import { AuthUtil } from "@/app/components/auth";
 import { useLocale } from 'next-intl';
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSubmission } from '@/app/store/auth-context';
@@ -17,7 +17,8 @@ export default function Next() {
     useEffect(() => {
         if (!isDataSubmitted) {
             router.push('/en/home');
-        } }, [])
+        } 
+    }, [])
 
     return (
         <main>

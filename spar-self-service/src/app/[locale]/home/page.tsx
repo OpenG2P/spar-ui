@@ -1,14 +1,11 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import Image from "next/image";
 import { AuthUtil } from "@/app/components/auth";
 import { GetFaBox } from "@/app/components";
 import { useLocale } from 'next-intl';
-import { useTranslations } from "next-intl";
 import Loading from "../loading";
 export default function Next() {
   const localActive = useLocale();
-  // const t= useTranslations('home')
-
   return (
     <main>
       <AuthUtil failedRedirectUrl={`/${localActive}/login`}/>

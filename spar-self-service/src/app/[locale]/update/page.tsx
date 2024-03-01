@@ -1,19 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { AuthUtil } from "@/app/components/auth";
-import Link from "next/link";
-import { GetFaBox, UpdateFaBox } from "@/app/components";
+import {  UpdateFaBox } from "@/app/components";
 import { useLocale } from 'next-intl';
 import { useTranslations } from "next-intl";
-type UpdateFaBoxProps = {
-    levelindex: number;
-    parent: number;
-};
+
 export default function Next() {
     const localActive = useLocale();
     const t = useTranslations('Update')
-    const [subTab, setSubTab] = useState("subTab1");
+    
     return (
         <main>
             <AuthUtil failedRedirectUrl={`/${localActive}/login`} />

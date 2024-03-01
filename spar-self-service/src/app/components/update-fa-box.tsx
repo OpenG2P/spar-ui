@@ -1,7 +1,5 @@
 
 "use client";
-
-import Select from "react-select";
 import { useEffect, useState } from "react";
 import { prefixBaseApiPath } from "../../utils/path";
 import { getFa } from "../../utils/getFa";
@@ -13,8 +11,6 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useSubmission } from "../store/auth-context";
-
-
 
 
 type State = {

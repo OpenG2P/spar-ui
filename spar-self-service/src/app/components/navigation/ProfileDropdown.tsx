@@ -8,7 +8,6 @@ import { prefixBaseApiPath } from "@/utils/path";
 import { authContext } from "../auth";
 import { useRouter } from "next/navigation";
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
 import { useTranslations } from "next-intl";
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(' ');
@@ -19,10 +18,7 @@ export default function ProfileDropDown(): JSX.Element {
   const t = useTranslations('ProfileSet')
   
   const router = useRouter();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  
 
 
   const logoutHandler = () => {
@@ -65,13 +61,13 @@ export default function ProfileDropDown(): JSX.Element {
               {({ active }: { active: boolean }) => (
                 <Link
                   href={`/${localActive}/myprofile`}
-                  onClick={handleClick}
+                  
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "px-2 py-2 text-sm flex items-center gap-2"
                   )}
                 >
-                  <img src="http://spar.openg2p.my/spar/img/person.png" className='w-1/6 h-1/6 ' alt="person" />
+                  <Image src="http://spar.openg2p.my/spar/img/person.png"  alt="person" width={30} height={30}/>
                   <span>{t('profile')}</span>
                   
                 </Link>
@@ -87,7 +83,7 @@ export default function ProfileDropDown(): JSX.Element {
                     "flex items-center gap-2 w-full px-4 py-2 text-left text-sm"
                   )}
                 >
-                  <img src="http://spar.openg2p.my/spar/img/logout.png" alt="logout" />
+                  <Image src="http://spar.openg2p.my/spar/img/logout.png" alt="logout" width={20} height={20} />
                   <span>{t('log_out')}</span>
                 </button>
               )}

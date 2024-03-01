@@ -1,6 +1,5 @@
 import { AuthUtil } from '../components/auth';
 import { useLocale } from 'next-intl';
-import { useTranslations } from 'next-intl';
 
 export default function Root() {
     const localActive = useLocale();
