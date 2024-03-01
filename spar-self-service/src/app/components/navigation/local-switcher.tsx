@@ -1,13 +1,13 @@
 "use client";
 
-import {useLocale} from "next-intl";
-import {useRouter} from "next/navigation";
-import {ChangeEvent, useTransition} from "react";
-import {Fragment} from "react";
 import {Menu, Transition} from "@headlessui/react";
+import {useLocale} from "next-intl";
 import Image from "next/image";
+import {useRouter} from "next/navigation";
+import {ChangeEvent, Fragment, useTransition} from "react";
 
 import {usePathname} from "next/navigation";
+import {prefixBasePath} from "@/utils/path";
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
 }
@@ -28,9 +28,9 @@ export default function LocalSwitcher() {
 
   const getFlagImage = (locale: "en" | "fr" | "tl") => {
     const flagImages = {
-      en: "/img/flag_en.png",
-      fr: "/img/flag_fr.png",
-      tl: "/img/flag_tl.png",
+      en: prefixBasePath("/img/flag_en.png"),
+      fr: prefixBasePath("/img/flag_fr.png"),
+      tl: prefixBasePath("/img/flag_tl.png"),
     };
 
     return flagImages[locale];
@@ -49,7 +49,13 @@ export default function LocalSwitcher() {
           <Image src={getFlagImage(localActive)} alt={localActive} width={20} height={20} />
 
           <span>{localActive === "en" ? "English" : localActive === "fr" ? "French" : "Filipino"}</span>
-          <Image className="w-3 h-3 mr-2" src="/img/down_arrow.png" alt="person" width={60} height={60} />
+          <Image
+            className="w-3 h-3 mr-2"
+            src={prefixBasePath("/img/down_arrow.png")}
+            alt="person"
+            width={60}
+            height={60}
+          />
           <select value={localActive} className="hidden" onChange={onSelectChange} disabled={isPending}>
             {languageOptions.map((option) => (
               <option key={option.value} value={option.value}>

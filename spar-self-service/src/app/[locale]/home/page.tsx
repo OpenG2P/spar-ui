@@ -1,9 +1,10 @@
-import {Suspense} from "react";
-import Image from "next/image";
-import {AuthUtil} from "@/app/components/auth";
-import {GetFaBox} from "@/app/components";
 import {useLocale} from "next-intl";
+import Image from "next/image";
+import {Suspense} from "react";
+import {GetFaBox} from "@/app/components";
+import {AuthUtil} from "@/app/components/auth";
 import Loading from "../loading";
+import {prefixBasePath} from "@/utils/path";
 export default function Next() {
   const localActive = useLocale();
   return (
@@ -14,7 +15,7 @@ export default function Next() {
           <div className="m-24">
             <Image
               className="object-cover w-full h-full"
-              src="/img/infographic_02.png"
+              src={prefixBasePath("/img/infographic_02.png")}
               alt="person"
               width={600}
               height={600}

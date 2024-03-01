@@ -19,8 +19,7 @@ export const authContext: {
     address?: any;
     phone_number?: string;
   };
-  getFaRaw: boolean;
-} = {profile: null, getFaRaw: process.env.NEXT_PUBLIC_DEFAULT_GET_FA_RAW == "true" || false};
+} = {profile: null};
 
 export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl?: string}) {
   const {setProfile} = useAuth();

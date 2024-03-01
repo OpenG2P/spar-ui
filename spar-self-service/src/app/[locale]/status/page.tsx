@@ -7,6 +7,7 @@ import {useEffect} from "react";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
 import {useSubmission} from "@/app/store/auth-context";
+import {prefixBasePath} from "@/utils/path";
 
 export default function Next() {
   const localActive = useLocale();
@@ -27,7 +28,7 @@ export default function Next() {
           <div className="m-24">
             <Image
               className="object-cover w-full h-full"
-              src="/img/infographic_01.png"
+              src={prefixBasePath("/img/infographic_01.png")}
               alt="person"
               width={600}
               height={600}
@@ -44,7 +45,7 @@ export default function Next() {
                       <div className="m-4 p-6">
                         <Image
                           className="object-cover "
-                          src="/img/green_tick.png"
+                          src={prefixBasePath("/img/green_tick.png")}
                           alt="person"
                           width={60}
                           height={60}
@@ -54,7 +55,7 @@ export default function Next() {
                         <Link href={`/${localActive}/home`} className="text-white text-sm">
                           <Image
                             className="ml-48 mt-4"
-                            src="/img/arrow_02.png"
+                            src={prefixBasePath("/img/arrow_02.png")}
                             alt="person"
                             width={50}
                             height={50}

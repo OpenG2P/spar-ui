@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import {useEffect, useState} from "react";
-import {prefixBaseApiPath} from "@/utils/path";
+import {prefixBaseApiPath, prefixBasePath} from "@/utils/path";
 import {useTranslations} from "next-intl";
 type LoginProvider = {
   id: number;
@@ -55,7 +55,7 @@ export default function LoginBox() {
             <span className="mr-2">Submit The Form</span>
           </a>
           <Image
-            src="/img/arrow_01.png"
+            src={prefixBasePath("/img/arrow_01.png")}
             className="mb-0"
             priority={true}
             alt="Logo"
@@ -64,7 +64,14 @@ export default function LoginBox() {
           />
         </button> */}
       </div>
-      <Image src="/img/globe_bg.png" className="mb-0" priority={true} alt="Logo" width={900} height={900} />
+      <Image
+        src={prefixBasePath("/img/globe_bg.png")}
+        className="mb-0"
+        priority={true}
+        alt="Logo"
+        width={900}
+        height={900}
+      />
     </div>
   );
 }

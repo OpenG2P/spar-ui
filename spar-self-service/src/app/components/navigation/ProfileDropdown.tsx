@@ -4,7 +4,7 @@ import {Fragment} from "react";
 import {Menu, Transition} from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
-import {prefixBaseApiPath} from "@/utils/path";
+import {prefixBaseApiPath, prefixBasePath} from "@/utils/path";
 import {authContext} from "../auth";
 import {useRouter} from "next/navigation";
 import {useLocale} from "next-intl";
@@ -32,7 +32,13 @@ export default function ProfileDropDown(): JSX.Element {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="flex justify-between items-center w-full gap-x-2 px-2 py-2 text-sm  text-black hover:bg-gray-50">
-          <Image src="/img/user_image.png" alt="user" className="w-full" width={400} height={400} />
+          <Image
+            src={prefixBasePath("/img/user_image.png")}
+            alt="user"
+            className="w-full"
+            width={400}
+            height={400}
+          />
         </Menu.Button>
       </div>
 
@@ -56,7 +62,7 @@ export default function ProfileDropDown(): JSX.Element {
                     "px-2 py-2 text-sm flex items-center gap-2"
                   )}
                 >
-                  <Image src="/img/person.png" alt="person" width={30} height={30} />
+                  <Image src={prefixBasePath("/img/person.png")} alt="person" width={30} height={30} />
                   <span>{t("profile")}</span>
                 </Link>
               )}
@@ -71,7 +77,7 @@ export default function ProfileDropDown(): JSX.Element {
                     "flex items-center gap-2 w-full px-4 py-2 text-left text-sm"
                   )}
                 >
-                  <Image src="/img/logout.png" alt="logout" width={20} height={20} />
+                  <Image src={prefixBasePath("/img/logout.png")} alt="logout" width={20} height={20} />
                   <span>{t("log_out")}</span>
                 </button>
               )}

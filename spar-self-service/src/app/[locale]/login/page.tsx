@@ -1,4 +1,4 @@
-import {AuthUtil} from "../../components/auth";
+import {AuthUtil} from "@/app/components/auth";
 import LoginBox from "./loginbox";
 
 export default async function Login() {

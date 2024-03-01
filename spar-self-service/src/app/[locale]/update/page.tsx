@@ -1,9 +1,10 @@
 "use client";
 import Image from "next/image";
-import {AuthUtil} from "@/app/components/auth";
-import {UpdateFaBox} from "@/app/components";
 import {useLocale} from "next-intl";
 import {useTranslations} from "next-intl";
+import {AuthUtil} from "@/app/components/auth";
+import {UpdateFaBox} from "@/app/components";
+import {prefixBasePath} from "@/utils/path";
 
 export default function Next() {
   const localActive = useLocale();
@@ -17,7 +18,7 @@ export default function Next() {
           <div className="m-24">
             <Image
               className="object-cover w-full h-full"
-              src="/img/infographic_01.png"
+              src={prefixBasePath("/img/infographic_01.png")}
               alt="person"
               width={600}
               height={600}

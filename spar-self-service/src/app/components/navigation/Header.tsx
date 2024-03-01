@@ -1,11 +1,11 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import ProfileDropDown from "./ProfileDropdown";
 import {useTranslations} from "next-intl";
+import Image from "next/image";
+import Link from "next/link";
+import {prefixBasePath} from "@/utils/path";
+import {useAuth} from "@/app/store/auth-context";
+import ProfileDropDown from "./ProfileDropdown";
 import LocalSwitcher from "./local-switcher";
-import {useAuth} from "../../store/auth-context";
 
 export default function Header() {
   const t = useTranslations("Navigation");
@@ -17,7 +17,13 @@ export default function Header() {
         <nav className="shadow-md opacity-100 bg-white border-gray-200 h-300 p-2">
           <div className="flex flex-wrap justify-between items-center">
             <Link href="/" className="ml-3 flex items-center">
-              <Image src="/img/spar_logo.png" priority={true} alt="Logo" width={130} height={150} />
+              <Image
+                src={prefixBasePath("/img/spar_logo.png")}
+                priority={true}
+                alt="Logo"
+                width={130}
+                height={150}
+              />
             </Link>
 
             <div className="flex items-center gap-12 text-sm text-black h-2">

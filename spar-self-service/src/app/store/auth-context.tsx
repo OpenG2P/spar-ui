@@ -15,7 +15,6 @@ interface AuthContextType {
     address?: any;
     phone_number?: string;
   } | null;
-  getFaRaw: boolean;
   setProfile: (profile: AuthContextType["profile"]) => void;
 }
 interface SubmissionContextType {
@@ -53,7 +52,6 @@ export function AuthProvider({children}: AuthProviderProps) {
   const [isDataSubmitted, setDataSubmitted] = useState<boolean>(false);
   const authContext: AuthContextType = {
     profile,
-    getFaRaw: false,
     setProfile,
   };
   const submissionContext: SubmissionContextType = {
