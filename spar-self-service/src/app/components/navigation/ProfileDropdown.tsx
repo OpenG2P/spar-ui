@@ -9,11 +9,13 @@ import {authContext} from "../auth";
 import {useRouter} from "next/navigation";
 import {useLocale} from "next-intl";
 import {useTranslations} from "next-intl";
+import {useAuth} from "@/app/store/auth-context";
 function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function ProfileDropDown(): JSX.Element {
+  const {setProfile} = useAuth();
   const localActive = useLocale();
   const t = useTranslations("ProfileSet");
 
@@ -24,6 +26,7 @@ export default function ProfileDropDown(): JSX.Element {
       method: "POST",
     }).finally(() => {
       authContext.profile = null;
+      setProfile(null);
       router.push("/en/login");
     });
   };
