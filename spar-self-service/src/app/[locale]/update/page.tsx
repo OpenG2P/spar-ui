@@ -29,18 +29,18 @@ export default function Next() {
                         />
                     </div>
                 </div>
-                <div className="w-full max-w-sm flex flex-col m-8 pl-4 basis-1/2">
+                <div className="w-full max-w-sm flex flex-col m-12 pl-6 basis-1/2">
                     <div className="flex flex-col p-1 relative items-center">
                         <div className="max-w-sm mx-auto mt-2">
                             <div className="flex justify-center">
                                 <nav className=" flex overflow-x-auto items-center p-1 text-xl text-gray-600 bg-white rounded-3xl">
                                     <div className="mt-3">
                                         <div className="flex flex-col">
-                                            <div className="text-sky-500 text-2xl" >{t('update')}</div>
-                                            <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
+                                            <div className="text-orange-500 text-2xl" >{t('update')}</div>
+                                            <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
                                             <div className="w-full max-w-auto  rounded-lg bg-white ">
-                                                <div className="mt-2">    
-                                                <UpdateFaBox  />         
+                                                <div className="mt-2">
+                                                    <UpdateFaBox />
                                                 </div>
                                             </div>
                                         </div>

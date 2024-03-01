@@ -46,7 +46,7 @@ export default function ProfilePage() {
                       <div className="text-sm font-medium text-gray-600  no-underdivne ">
                         {t('name')}
                       </div>
-                      <p className="text-2xl text-sky-500  ">
+                      <p className="text-2xl text-orange-500  ">
                         {name}
                       </p>
                     </div>
@@ -80,7 +80,7 @@ export default function ProfilePage() {
                     </div>
 
                   </div>
-                  <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
+                  <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
                   <div className='flex  gap-80 mt-2 '>
                     <div className=" opacity-100 flex items-start  ">
                       <div className=" rounded-lg opacity-100 w-10 h-10 m-2 flex-shrink-0  ">
@@ -109,7 +109,7 @@ export default function ProfilePage() {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
+                  <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
                   <div className="mt-4 opacity-100 flex items-start ">
                     <div className="flex-1 min-w-0 mt-2 ">
                       <p className="text-sm font-medium text-gray-600">{t('add')}</p>
@@ -122,7 +122,7 @@ export default function ProfilePage() {
                       </div>
                     </div>
                   </div>
-                  <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
+                  <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
                 </div>
               </div>
             </div>

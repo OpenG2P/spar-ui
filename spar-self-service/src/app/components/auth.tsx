@@ -29,7 +29,7 @@ export const authContext: {
 
 export function AuthUtil(params: { successRedirectUrl?: string; failedRedirectUrl?: string }) {
 
-  const { profile, setProfile } = useAuth();
+  const { setProfile } = useAuth();
   const { push, replace } = useRouter();
 
   function checkAndRedirect() {

@@ -73,7 +73,7 @@
 //                                 {activeTab === 'tab1' && (
 
 //                                     <div className="flex flex-col">
-//                                         <div className="text-sky-500 text-2xl" >Your account information</div>
+//                                         <div className="text-orange-500 text-2xl" >Your account information</div>
 //                                         <div className="block w-full max-w-[18rem]  rounded-lg bg-white ">
 //                                             <GetFaBox />
 //                                         </div>
@@ -87,25 +87,25 @@
 //                                 )}
 //                                 {activeTab === 'tab2' && (
 //                                     <div>
-//                                         <div className="text-sky-500 text-2xl">Update account information</div>
+//                                         <div className="text-orange-500 text-2xl">Update account information</div>
 //                                         <div className="mt-4">
 //                                             Type
 //                                         </div>
 //                                         <div className="flex flex-row gap-4 ">
 //                                             <div
-//                                                 className={`border-2 border-gray-500 rounded-xl w-20 h-20 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-sky-500 hover:shadow-lg ${subTab === 'subTab1' ? 'border-gray-500' : ''}`}
+//                                                 className={`border-2 border-gray-500 rounded-xl w-20 h-20 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-orange-500 hover:shadow-lg ${subTab === 'subTab1' ? 'border-gray-500' : ''}`}
 //                                                 onClick={() => handleSubTabClick('subTab1')}
 //                                             >
 //                                                 <Image className="w-1/2 h-1/2 square-full m-3 ml-5 mt-4" src="http://spar.openg2p.my/spar/img/bank.png" alt="bank" width={50} height={50} />
 //                                             </div>
 //                                             <div
-//                                                 className={`border-2 border-gray-500 rounded-xl w-20 h-20 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-sky-500 hover:shadow-lg ${subTab === 'subTab2' ? 'border-gray-500' : ''}`}
+//                                                 className={`border-2 border-gray-500 rounded-xl w-20 h-20 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-orange-500 hover:shadow-lg ${subTab === 'subTab2' ? 'border-gray-500' : ''}`}
 //                                                 onClick={() => handleSubTabClick('subTab2')}
 //                                             >
 //                                                 <Image className="w-1/2 h-1/2 square-full m-3 ml-5 mt-4" src="http://spar.openg2p.my/spar/img/mobile_wallet.png" alt="mobile_wallet" width={50} height={50} />
 //                                             </div>
 //                                             <div
-//                                                 className={`border-2 border-gray-500 rounded-xl w-20 h-20 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-sky-500 hover:shadow-lg ${subTab === 'subTab3' ? 'border-gray-500' : ''}`}
+//                                                 className={`border-2 border-gray-500 rounded-xl w-20 h-20 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-orange-500 hover:shadow-lg ${subTab === 'subTab3' ? 'border-gray-500' : ''}`}
 //                                                 onClick={() => handleSubTabClick('subTab3')}
 //                                             >
 //                                                 <Image className="w-1/2 h-1/2 square-full m-3 ml-5 mt-4" src="http://spar.openg2p.my/spar/img/mpesa.png" alt="mpesa" width={50} height={50} />
@@ -116,14 +116,14 @@
 //                                                 <div className="flex flex-col">
 //                                                     <div>
 //                                                         <div className=" rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300">Bank</div>
-                                                        // <select
-                                                        //     className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300 bg-white w-full"
-                                                        //     value={selectedOption}
-                                                        //     onChange={handleDropdownChange}
-                                                        // >
-                                                        //     <option value="" disabled>Select Branch</option>
-                                                        //     <option value="option1">Option 1</option>
-                                                        // </select>
+// <select
+//     className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300 bg-white w-full"
+//     value={selectedOption}
+//     onChange={handleDropdownChange}
+// >
+//     <option value="" disabled>Select Branch</option>
+//     <option value="option1">Option 1</option>
+// </select>
 //                                                     </div>
 //                                                     <div>
 //                                                         <div className=" rounded-md p-2 focus:outline-none focus:ring focus:border-blue-300">Branch</div>

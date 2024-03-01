@@ -1,11 +1,24 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import Image from "next/image";
 import { AuthUtil } from "@/app/components/auth";
 import { useLocale } from 'next-intl';
+import { useEffect,useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useSubmission } from '@/app/store/auth-context';
+
+
 export default function Next() {
     const localActive = useLocale();
     const t = useTranslations('Status')
+    const router = useRouter();
+    const { isDataSubmitted } = useSubmission();
+    useEffect(() => {
+        if (!isDataSubmitted) {
+            router.push('/en/home');
+        } }, [])
+
     return (
         <main>
             <AuthUtil failedRedirectUrl={`/${localActive}/login`} />

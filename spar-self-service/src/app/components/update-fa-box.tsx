@@ -1,5 +1,6 @@
 
 "use client";
+
 import Select from "react-select";
 import { useEffect, useState } from "react";
 import { prefixBaseApiPath } from "../../utils/path";
@@ -11,10 +12,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-type UpdateFaBoxProps = {
-  levelindex: number;
-  parent: number;
-};
+import { useSubmission } from "../store/auth-context";
+
+
+
+
 type State = {
   choices: KeyValue[];
   levels: FormLevel[];
@@ -25,16 +27,17 @@ export default function UpdateFaBox(
 
   const localActive = useLocale();
   const t = useTranslations('Update')
+  const { setDataSubmitted } = useSubmission();
 
-
-  const [subTab, setSubTab] = useState("subTab1");
+  const [subTab, setSubTab] = useState("");
+  // const [subTab, setSubTab] = useState("subTab1");
   const [formData, setFormData] = useState<State>({ choices: [], levels: [] });
   //  0 - empty/default. 1 - update form. 2 - loading. 3 - succ. 4 - fail.
   const [renderState, setRenderState] = useState(0);
   var alreadyLinked = false;
   const router = useRouter();
   const [emailIsInvalid, setEmailIsInvalid] = useState(false);
-  
+
 
 
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
@@ -97,24 +100,25 @@ export default function UpdateFaBox(
       formData.levels.forEach((x, i) => {
         if (x.name === 'Email') {
           const emailValue = formData.choices[i]?.value;
-          if (!emailValue.includes('@')) {
+          if (emailValue.length === 0 || !emailValue.includes('@')) {
             emailIsValid = false;
           }
         }
         if (x.code === 'phone') {
-          const phoneValue = formData.choices[i]?.value;
-          if (phoneValue.length !== 10) {
+          const phoneValue = String(formData.choices[i]?.value);
+          if (phoneValue.length === 0 ||phoneValue.length !== 10 ) {
+            console.log('phoneValue:', phoneValue);
             phoneIsValid = false;
           }
         }
         if (x.code === 'account_no') {
           const accValue = formData.choices[i]?.value;
-          if (accValue.length !== 10) {
+          if (accValue.length === 0 || accValue.length !== 10) {
             accIsValid = false;
           }
         }
       });
-      if (!emailIsValid || !phoneIsValid|| !accIsValid) {
+      if (!emailIsValid || !phoneIsValid || !accIsValid) {
         setEmailIsInvalid(!emailIsValid);
         setRenderState(1);
         if (!emailIsValid) {
@@ -131,6 +135,7 @@ export default function UpdateFaBox(
       }
       const updateFaSuccess = (res: any) => {
         if (res.status === "succ") {
+          setDataSubmitted(true);
           console.log("Form Data upon submission:", formData);
           setRenderState(3);
           router.push(`/${localActive}/status`);
@@ -164,7 +169,7 @@ export default function UpdateFaBox(
       }
     }
   }
-
+ 
   function onFieldChange(listIndex: number, value: string) {
     const localFormData = structuredClone(formData);
     const formLevel = localFormData.levels[listIndex];
@@ -192,29 +197,30 @@ export default function UpdateFaBox(
   useEffect(() => {
     updateFaSubmit();
   }, []);
-
-
   const handleTabClick = (tab: any, next_level_id: number | undefined, id: number) => {
     const updatedFormData = { ...formData };
     setSubTab(tab);
-    const tabIndex = formData.levels[0].options?.findIndex((option) => option.id === id);
-    if (tabIndex !== -1) {
-      const selectedOption = formData.levels[0].options?.[tabIndex];
-      updatedFormData.levels[0].next_level_id = selectedOption.next_level_id;
-      updatedFormData.levels[0].id = selectedOption.id;
-      updatedFormData.choices = selectedOption.choices || [];
+    const vals = formData.levels[0].options;
 
-      if (next_level_id) {
-        updatedFormData.levels[0].next_level_id = next_level_id;
+    if (vals) {
+      const tabIndex = vals.findIndex((option) => option.id === id);
+
+      if (tabIndex !== -1) {
+        const selectedOption = vals[tabIndex];
+        updatedFormData.levels[0].next_level_id = selectedOption.next_level_id;
+        updatedFormData.levels[0].id = selectedOption.id;
+
+
+        if (next_level_id) {
+          updatedFormData.levels[0].next_level_id = next_level_id;
+        }
+        onFieldChange(0, selectedOption.code);
+
+        setFormData(updatedFormData);
       }
-      onFieldChange(0, selectedOption.code);
-
-      setFormData(updatedFormData);
     }
   }
   const subTabs = ['subTab1', 'subTab2', 'subTab3'];
-
-
   return (
     <>
       <div className="container ">
@@ -229,14 +235,14 @@ export default function UpdateFaBox(
                       <div key={`option-${j}`}>
                         <div className="flex flex-row gap-8">
                           <div
-                            className={`border-2 border-gray-300 rounded-md w-24 h-24 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-sky-500 hover:shadow-lg ${subTab === `subTab${j + 1}` ? 'border-sky-500' : ''}`}
+                            className={`border-2 border-gray-300 rounded-md w-24 h-24 mr-2 flex-shrink-0 focus:outline-none transition duration-300 transform hover:border-orange-500 hover:shadow-lg ${subTab === `subTab${j + 1}` ? 'border-orange-500' : ''}`}
                             onClick={() => handleTabClick(`subTab${j + 1}`, option.next_level_id, option.id)}
                           >
                             <div className="flex flex-col m-6 mt-4">
                               <Image className={`w-10 h-10 square-full ${subTab === `subTab${j + 1}` ? 'opacity-100' : 'opacity-30'
-                                }`}  src={`http://spar.openg2p.my/spar/img/${option.code}.png`} alt={option.name} width={50} height={50} />
+                                }`} src={`http://spar.openg2p.my/spar/img/${option.code}.png`} alt={option.name} width={50} height={50} />
                               <p
-                                className={`text-center text-xs ${subTab === `subTab${j + 1}` ? 'text-sky-500' : 'text-gray-400'
+                                className={`text-center text-xs ${subTab === `subTab${j + 1}` ? 'text-orange-500' : 'text-gray-400'
                                   }`}
                               >{option.name}</p>
                             </div>
@@ -259,6 +265,7 @@ export default function UpdateFaBox(
                                     className="w-full border-t-2 p-3 border border-gray-500 shadow-md rounded-md bg-white"
                                     onChange={(event) => onFieldChange(i, event.target.value)}
                                     value={formData.choices[i]?.value}
+                                    required
                                   >
                                     <option value="">Select {x.name}</option>
                                     {x.options?.map((y, j) => (
@@ -269,30 +276,39 @@ export default function UpdateFaBox(
                                   </select>
                                 </div>
                               ) : (
-                                <div>
+                                <div className="flex flex-col">
                                   <label className="text-sm text-black">{x.name}</label>
                                   <input
                                     type="text"
-                                    className="w-full p-2 mt-1  rounded-md border"
-                                   
+                                    className="w-full p-2 mt-1  rounded-md border "
+
                                     onChange={(event) => onFieldChange(i, event.target.value)}
                                     value={formData.choices[i]?.value || ''}
+                                    required
                                   />
-                                    
 
-                                  {/* <div className="border border-red">{emailIsInvalid && <p>Please Enter Valid Email</p>}</div> */}
-                                  {x.name === 'Email' && !formData.choices[i]?.value.includes('@') && (
+                                  {emailIsInvalid && <p className="text-sm text-red-500">Please Enter Valid Email</p>}
+                                    {x.name === 'Email' && (formData.choices[i]?.value.length === 0 ||!formData.choices[i]?.value.includes('@')) && (
                                     <p className="text-sm text-red-500">Please Enter Valid {x.name}</p>
                                   )}
-                                  {x.code === 'phone' && formData.choices[i]?.value.length !== 10 && (
+                                    {x.code === 'phone' && (formData.choices[i]?.value.length === 0 ||formData.choices[i]?.value.length !== 10 )&& (
                                     <p className="text-sm text-red-500">Phone number must be 10 digits</p>
                                   )}
-                                    {x.code === 'account_no' && formData.choices[i]?.value.length < 10 && (
+                                    {x.code === 'account_no' && 
+                                      (formData.choices[i]?.value.length === 0 || formData.choices[i]?.value.length < 10) && (
                                     <p className="text-sm text-red-500">Please select a {x.name}</p>
                                   )}
-                                 
+                                    <div className="flex flex-row gap-4">
+                                      <button className="inline-block mt-8 bg-black rounded-3xl w-1/2 text-center p-2 shadow-md hover:bg-yellow-700" onClick={() => updateFaSubmit()}><Link href={`/${localActive}/status`} className="text-white text-sm">
+                                        {t('submit')}
+                                      </Link></button>
 
-
+                                      <div className="inline-block mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 shadow-md hover:bg-yellow-700">
+                                        <Link href={`/${localActive}/home`} className="text-gray-500 text-sm">
+                                          Cancel
+                                        </Link>
+                                      </div>
+                                    </div>
                                 </div>
                               )
                             )}
@@ -307,25 +323,7 @@ export default function UpdateFaBox(
             )}
           </div>
         )}
-        {renderState === 4 && (
-          <>
-          
-          </>
-        )}
-
-
-
-        <div className="flex flex-row gap-4">
-          <button className="inline-block mt-10 bg-black rounded-3xl w-1/2 text-center p-1 shadow-md hover:bg-yellow-700" onClick={() => updateFaSubmit()}><Link href={`/${localActive}/status`} className="text-white text-sm">
-            {t('submit')}
-          </Link></button>
-
-          <div className="inline-block mt-10 border border-gray-500 rounded-3xl w-1/2 text-center p-1 shadow-md hover:bg-yellow-700">
-            <Link href={`/${localActive}/home`} className="text-gray-500 text-sm">
-              Cancel
-            </Link>
-          </div>
-        </div>
+        
       </div>
     </>
   );

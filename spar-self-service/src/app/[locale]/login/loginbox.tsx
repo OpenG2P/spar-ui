@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState} from "react";
-import {prefixBaseApiPath} from "@/utils/path";
+import { useEffect, useState } from "react";
+import { prefixBaseApiPath } from "@/utils/path";
 import Link from "next/link";
 import { useLocale } from 'next-intl';
 import { useTranslations } from "next-intl";
@@ -17,12 +17,12 @@ export default function LoginBox() {
 
   const [loginProviders, setLoginProviders] = useState<LoginProvider[]>([]);
   const localActive = useLocale();
-  const t= useTranslations('login')
+  const t = useTranslations('login')
 
 
   function getLoginProviders() {
     fetch(prefixBaseApiPath(`/auth/getLoginProviders`)).then((res) => {
-      res.json().then((resJson: {loginProviders: LoginProvider[]}) => {
+      res.json().then((resJson: { loginProviders: LoginProvider[] }) => {
         setLoginProviders(resJson.loginProviders);
       });
     });
@@ -32,7 +32,7 @@ export default function LoginBox() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="text-center p-8 m-8">
-        <div className="text-sky-500 text-3xl p-2">
+        <div className="text-orange-500 text-3xl p-2">
           {t('title')}
         </div>
         <div className="">
@@ -54,7 +54,7 @@ export default function LoginBox() {
               >
                 {t('button_text')}
               </a>
-                          
+
             </div>
           ))}
         {/* <button

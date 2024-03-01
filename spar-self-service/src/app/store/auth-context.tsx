@@ -18,9 +18,13 @@ interface AuthContextType {
     getFaRaw: boolean;
     setProfile: (profile: AuthContextType['profile']) => void;
 }
+interface SubmissionContextType {
+    isDataSubmitted: boolean;
+    setDataSubmitted: (status: boolean) => void;
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
+const SubmissionContext = createContext<SubmissionContextType | undefined>(undefined);
 interface AuthProviderProps {
     children: ReactNode;
 }
@@ -34,15 +38,35 @@ export function useAuth() {
 
     return context;
 }
+export function useSubmission() {
+    const context = useContext(SubmissionContext);
+
+    if (!context) {
+        throw new Error('useSubmission must be used within an AuthProvider');
+    }
+
+    return context;
+}
 
 export function AuthProvider({ children }: AuthProviderProps) {
     const [profile, setProfile] = useState<AuthContextType['profile']>(null);
+    const [isDataSubmitted, setDataSubmitted] = useState<boolean>(false);
     const authContext: AuthContextType = {
         profile,
         getFaRaw: false,
         setProfile
         
     };
+    const submissionContext: SubmissionContextType = {
+        isDataSubmitted,
+        setDataSubmitted,
+    };
 
-    return <AuthContext.Provider value={authContext}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={authContext}>
+            <SubmissionContext.Provider value={submissionContext}>
+                {children}
+            </SubmissionContext.Provider>
+        </AuthContext.Provider>
+    );
 }

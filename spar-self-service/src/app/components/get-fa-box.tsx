@@ -68,8 +68,8 @@ export default function GetFaBox() {
         {renderState === 2 && (!getFaResult || !Array.isArray(getFaResult) || getFaResult.length === 0) && (
           <div className="row flex justify-content-center">
             <div className="flex flex-col">
-              <div className="text-sky-500 text-2xl">{t('title')}</div>
-              <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
+              <div className="text-orange-500 text-2xl">{t('title')}</div>
+              <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
               <p className="text-gray-800 mt-4 text-md">
                 {t('description')}
               </p>
@@ -86,15 +86,15 @@ export default function GetFaBox() {
         {renderState === 2 && getFaResult && Array.isArray(getFaResult) && getFaResult.length > 0 &&(
           <ul className="w-full">
             <div className="flex flex-col">
-              <div className="text-sky-500 text-2xl" >{t('title')}</div>
-              <div className="w-full border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
+              <div className="text-orange-500 text-2xl" >{t('title')}</div>
+              <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
             </div>
             {getFaResult.slice().reverse().map((x, i) => (
-              <li key={`item-${i}`} className="border-b-2 border-sky-200 border-opacity-100 p-2 flex items-start space-x-4">
+              <li key={`item-${i}`} className="border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4">
                 <div className="flex flex-row">
                   {x.key === 'type' ? (
                     <span>
-                      <Image className="w-10 h-10 inline-block mt-2 bg-sky-200 rounded-lg" src={`http://spar.openg2p.my/spar/img/${x.value}.png`} alt={x.value} width={50} height={50} />
+                      <Image className="w-10 h-10 inline-block mt-2 bg-orange-200 rounded-lg" src={`http://spar.openg2p.my/spar/img/${x.value}.png`} alt={x.value} width={50} height={50} />
                     </span>
                   ) : (
                     
