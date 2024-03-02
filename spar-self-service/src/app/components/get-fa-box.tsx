@@ -74,13 +74,13 @@ export default function GetFaBox() {
               <div className="text-orange-500 text-2xl">{t("title")}</div>
               <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
             </div>
-            {getFaResult.slice().map((x, i) => (
+            {getFaResult.slice().reverse().map((x, i) => (
               <li
                 key={`item-${i}`}
                 className="border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"
               >
                 <div className="flex flex-row">
-                  {x.key === "Type" ? (
+                  {x.key === "type" ? (
                     <span>
                       <Image
                         className="w-10 h-10 inline-block mt-2 bg-orange-200 rounded-lg"
