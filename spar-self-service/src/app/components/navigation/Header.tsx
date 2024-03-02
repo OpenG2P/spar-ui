@@ -1,16 +1,15 @@
-'use client';
-import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import ProfileDropDown from './ProfileDropdown';
-import { useTranslations } from 'next-intl';
-import LocalSwitcher from './local-switcher';
-import { useAuth } from '../../store/auth-context';
+"use client";
+import {useTranslations} from "next-intl";
+import Image from "next/image";
+import Link from "next/link";
+import {prefixBasePath} from "@/utils/path";
+import {useAuth} from "@/app/store/auth-context";
+import ProfileDropDown from "./ProfileDropdown";
+import LocalSwitcher from "./local-switcher";
 
 export default function Header() {
-  const t = useTranslations('Navigation');
-  const { profile } = useAuth();
-  
+  const t = useTranslations("Navigation");
+  const {profile} = useAuth();
 
   return (
     <>
@@ -19,7 +18,7 @@ export default function Header() {
           <div className="flex flex-wrap justify-between items-center">
             <Link href="/" className="ml-3 flex items-center">
               <Image
-                src="http://spar.openg2p.my/spar/img/spar_logo.png"
+                src={prefixBasePath("/img/spar_logo.png")}
                 priority={true}
                 alt="Logo"
                 width={130}
@@ -28,8 +27,8 @@ export default function Header() {
             </Link>
 
             <div className="flex items-center gap-12 text-sm text-black h-2">
-              <Link href="/">{t('support')}</Link>
-              <Link href="/">{t('contact')}</Link>
+              <Link href="/">{t("support")}</Link>
+              <Link href="/">{t("contact")}</Link>
               <LocalSwitcher />
 
               {profile && (

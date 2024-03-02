@@ -13,7 +13,7 @@ export function getFaStatusLoop(
         res
           .json()
           .then((resJson) => {
-            if (resJson.status == "succ" || resJson.status == "rjct") {
+            if (resJson.status === "succ" || resJson.status === "rjct") {
               return succFunc(resJson);
             } else {
               setTimeout(

@@ -39,6 +39,9 @@ jobs:
           docker build . \
             --file Dockerfile \
             --tag $SELF_SERVICE_IMAGE_ID:$VERSION
+          docker build . \
+            --file Dockerfile.no-runtime-build \
+            --tag $SELF_SERVICE_IMAGE_ID:$VERSION-no-runtime-build
       - name: Docker login
         run: |
           echo "${{ secrets.docker_hub_token }}" | docker login -u ${{ secrets.docker_hub_actor }} --password-stdin
@@ -49,3 +52,4 @@ jobs:
       - name: Docker Push images
         run: |
           docker push $SELF_SERVICE_IMAGE_ID:$VERSION
+          docker push $SELF_SERVICE_IMAGE_ID:$VERSION-no-runtime-build

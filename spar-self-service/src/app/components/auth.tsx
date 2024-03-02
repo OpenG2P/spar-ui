@@ -1,11 +1,9 @@
-
 "use client";
-import { useRouter } from "next/navigation";
-import { prefixBaseApiPath } from "@/utils/path";
-import { useEffect } from "react";
+import {useRouter} from "next/navigation";
+import {prefixBaseApiPath} from "@/utils/path";
+import {useEffect} from "react";
 
-
-import { useAuth } from "../store/auth-context";
+import {useAuth} from "../store/auth-context";
 
 export const authContext: {
   profile?: null | {
@@ -21,13 +19,11 @@ export const authContext: {
     address?: any;
     phone_number?: string;
   };
-  getFaRaw: boolean;
-} = { profile: null, getFaRaw: process.env.NEXT_PUBLIC_DEFAULT_GET_FA_RAW == "true" || false };
+} = {profile: null};
 
-export function AuthUtil(params: { successRedirectUrl?: string; failedRedirectUrl?: string }) {
-
-  const { setProfile } = useAuth();
-  const { push, replace } = useRouter();
+export function AuthUtil(params: {successRedirectUrl?: string; failedRedirectUrl?: string}) {
+  const {setProfile} = useAuth();
+  const {push, replace} = useRouter();
 
   function checkAndRedirect() {
     if (params.successRedirectUrl && authContext.profile) {
@@ -37,9 +33,8 @@ export function AuthUtil(params: { successRedirectUrl?: string; failedRedirectUr
     }
   }
 
-
   useEffect(() => {
-    fetch(prefixBaseApiPath('/auth/profile'))
+    fetch(prefixBaseApiPath("/auth/profile"))
       .then((res) => {
         if (res.ok) {
           res
@@ -49,16 +44,16 @@ export function AuthUtil(params: { successRedirectUrl?: string; failedRedirectUr
               setProfile(resJson);
             })
             .catch((err) => {
-              console.log('Error Getting profile json', err);
+              console.log("Error Getting profile json", err);
             })
             .finally(checkAndRedirect);
         } else {
-          console.log('Error Getting profile, res not ok');
+          console.log("Error Getting profile, res not ok");
           checkAndRedirect();
         }
       })
       .catch((err) => {
-        console.log('Error Getting profile', err);
+        console.log("Error Getting profile", err);
         checkAndRedirect();
       });
   }, []);

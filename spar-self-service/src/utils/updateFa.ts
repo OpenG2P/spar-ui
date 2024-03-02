@@ -1,5 +1,5 @@
-import {prefixBaseApiPath} from "./path";
 import {KeyValue} from "../types/dfsp-levels";
+import {prefixBaseApiPath} from "./path";
 
 export function updateFaStatusLoop(
   txnId: string,
@@ -14,7 +14,7 @@ export function updateFaStatusLoop(
         res
           .json()
           .then((resJson) => {
-            if (resJson.status == "rcvd" || resJson.status == "pdng") {
+            if (resJson.status === "rcvd" || resJson.status === "pdng") {
               setTimeout(() => updateFaStatusLoop(txnId, succFunc, failFunc, link, statusDelay), statusDelay);
             } else {
               return succFunc(resJson);

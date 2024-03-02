@@ -1,16 +1,15 @@
 import Favicon from "/public/img/favicon.ico";
-import '@/commons/styles/globals.css'
-import { Header } from "../components";
+import "@/commons/styles/globals.css";
+import {Header} from "../components";
 import type {Metadata} from "next";
-import { Roboto } from "next/font/google";
-import { NextIntlClientProvider, useMessages } from 'next-intl';
-import { AuthProvider } from "../store/auth-context";
+import {Roboto} from "next/font/google";
+import {NextIntlClientProvider, useMessages} from "next-intl";
+import {AuthProvider} from "../store/auth-context";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ['400', '700'],
+  weight: ["400", "700"],
 });
-
 
 export const metadata: Metadata = {
   title: "Social Payments Account Registry",
@@ -23,10 +22,7 @@ interface RootLayoutProps {
     locale: string;
   };
 }
-export default function RootLayout({
-  children,
-  params: { locale },
-}: Readonly<RootLayoutProps>) {
+export default function RootLayout({children, params: {locale}}: Readonly<RootLayoutProps>) {
   const messages = useMessages();
 
   return (
@@ -34,9 +30,9 @@ export default function RootLayout({
       <body className={roboto.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AuthProvider>
-          <Header />
-          <main>{children}</main>
-        </AuthProvider>
+            <Header />
+            <main>{children}</main>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>
