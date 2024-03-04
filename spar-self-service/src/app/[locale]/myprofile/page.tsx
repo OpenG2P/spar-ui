@@ -32,7 +32,7 @@ export default function ProfilePage() {
                 <div className="relative p-3 bg-white ring-1 ring-gray-900/5 rounded-2xl leading-none flex items-top justify-start space-x-6">
                   <Image
                     src={profilePicture}
-                    alt="profile picture"
+                    alt="Woman looking front"
                     className="relative object-cover object-center w-23 h-32 "
                     width={400}
                     height={400}
