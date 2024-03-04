@@ -213,14 +213,16 @@ export default function UpdateFaBox() {
   const subTabs = ["subTab1", "subTab2", "subTab3"];
   return (
     <>
-      <div className="container ">
+      <div className="2xl:m-36 container ">
+        <div className="text-orange-500 text-2xl ">{t("update")}</div>
+        <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
         {renderState === 1 && (
-          <div className="row">
+          <div className="">
             {formData.levels.length > 0 && (
               <>
-                <div className="mt-4 text-black text-sm">{formData.levels[0].name}</div>
-                <div className="flex flex-col gap-4 mt-2">
-                  <div className="flex flex-row gap-4">
+                <div className="mt-2 text-black text-sm">{formData.levels[0].name}</div>
+                <div className="flex flex-col mt-1">
+                  <div className="flex flex-row gap-4 ">
                     {formData.levels[0].options?.map((option, j) => (
                       <div key={`option-${j}`}>
                         <div className="flex flex-row gap-8">
@@ -256,7 +258,7 @@ export default function UpdateFaBox() {
                       subTab === "subTab1" && (
                         <div key={index}>
                           {formData.levels.map((x, i) => (
-                            <div key={`input-${i}`} className="mb-4">
+                            <div key={`input-${i}`} className="mb-2 mt-0 p-0">
                               {i > 0 &&
                                 (x.level >= 0 ? (
                                   <div>
@@ -303,13 +305,13 @@ export default function UpdateFaBox() {
                                       )}
                                     <div className="flex flex-row gap-4">
                                       <button
-                                        className="inline-block mt-8 shadow-md shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-customYellow"
+                                        className="inline-block mt-4  shadow-md shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center   hover:bg-customYellow"
                                         onClick={() => updateFaSubmit()}
                                       >
                                         {t("submit")}
                                       </button>
 
-                                      <div className="inline-block shadow-md shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:border-black hover:border-2">
+                                      <div className="inline-block shadow-md shadow-gray-300 mt-4 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:border-black hover:border-2">
                                         <Link href={`/${localActive}/home`} className="text-gray-500 text-sm">
                                           CANCEL
                                         </Link>
