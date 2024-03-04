@@ -45,9 +45,9 @@ export default function GetFaBox() {
 
   return (
     <>
-      <div className="container overflow-clip">
+      <div className="container 2xl:m-36 ">
         {renderState === 1 && (
-          <div className="row flex justify-content-center">
+          <div className=" flex justify-content-center">
             <div className="mx-auto my-10">
               <CircularProgress />
             </div>

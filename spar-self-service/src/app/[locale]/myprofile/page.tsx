@@ -18,7 +18,7 @@ export default function ProfilePage() {
   const email = profile?.email || "johnsmith@gmail.com";
   const dob = profile?.birthdate || "1974/07/01";
   const gender = profile?.gender || "Male";
-
+  const profilePicture = profile?.picture || prefixBasePath("/img/user_image_02.png");
   return (
     <>
       <div>
@@ -31,7 +31,7 @@ export default function ProfilePage() {
                 <div className="absolute inset-0  bg-sky-300 rounded-lg blur"></div>
                 <div className="relative p-3 bg-white ring-1 ring-gray-900/5 rounded-2xl leading-none flex items-top justify-start space-x-6">
                   <Image
-                    src={prefixBasePath("/img/user_image_02.png")}
+                    src={profilePicture}
                     alt="Woman looking front"
                     className="relative object-cover object-center w-23 h-32 "
                     width={400}
@@ -43,7 +43,7 @@ export default function ProfilePage() {
           </div>
           <div>
             <div className="flex-grow">
-              <div className="mt-24">
+              <div className="mt-24 2xl:m-28">
                 <div className="m-12 pl-24 ">
                   <div className=" opacity-100 flex items-start ">
                     <div className="flex-1 min-w-0 mt-2 ">
@@ -101,9 +101,9 @@ export default function ProfilePage() {
                       </div>
                     </div>
                     <div className=" opacity-100 flex items-start mr-28">
-                      <div className=" rounded-lg opacity-100 w-10 h-10 m-2  flex-shrink-0  ">
+                      <div className=" rounded-lg opacity-100 w-10 h-10 m-2 flex-shrink-0  ">
                         <Image
-                          className=" square-full  "
+                          className="square-full "
                           src={prefixBasePath("/img/gender.png")}
                           alt="gender"
                           width={100}
@@ -112,7 +112,7 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex-1 min-w-0 mt-2 ">
                         <div className="text-sm font-medium text-gray-600  no-underdivne ">{t("gender")}</div>
-                        <p className="text-md text-black font-bold">{gender}</p>
+                        <p className="text-md text-black font-bold ">{gender}</p>
                       </div>
                     </div>
                   </div>

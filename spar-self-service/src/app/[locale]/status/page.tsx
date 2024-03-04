@@ -24,16 +24,16 @@ export default function Next() {
   return (
     <main>
       <AuthUtil failedRedirectUrl={`/${localActive}/login`} />
-      <div className="flex flex-row">
-        <div className=" bg-gray-100 basis-1/2">
-          <div className="pl-24 ml-6 mt-16">
+      <div className="flex flex-row ">
+        <div className="2xl:h-screen bg-gray-100 basis-1/2 flex items-center justify-center">
+          <div className="pl-6 mt-16">
             <img src={prefixBasePath("/img/infographic_01.png")} alt="person" />
           </div>
         </div>
-        <div className="w-full max-w-sm flex flex-col m-20 basis-1/2">
-          <div className=" m-5 mt-12">
+        <div className="w-full max-w-sm m-20 basis-1/2">
+          <div className="2xl:mt-52 m-5 mt-12">
             <Suspense fallback={<Loading />}>
-              <div className="m-4 p-6  transition duration-300 transform hover:shadow-sky-200 hover:shadow-lg   border-dashed border-gray-400  border-2 rounded-2xl">
+              <div className=" items-center  m-4 p-6  transition duration-300 transform hover:shadow-sky-200 hover:shadow-lg   border-dashed border-gray-400  border-2 rounded-2xl">
                 <div className="flex flex-col m-3 flex-wrap">
                   <Image
                     src={prefixBasePath("/img/green_tick.png")}
