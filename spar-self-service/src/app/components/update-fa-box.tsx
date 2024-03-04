@@ -104,8 +104,7 @@ export default function UpdateFaBox() {
           }
         }
         if (x.code === "account_no") {
-          const accValue = String(formData.choices[i]?.value);
-          if (accValue.length === 0 || accValue.length !== 10) {
+          if (!formData.choices[i]?.value || formData.choices[i]?.value === '') {
             accIsValid = false;
           }
         }
