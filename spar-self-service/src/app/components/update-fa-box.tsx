@@ -27,7 +27,9 @@ export default function UpdateFaBox() {
   const [renderState, setRenderState] = useState(0);
   var alreadyLinked = false;
   const router = useRouter();
-  
+  const [isValidEmail , isntValidEmail] = useState(true);
+  const [isValidPhone, isntValidPhone] = useState(true);
+  const [isValidAcc, isntValidAcc] = useState(true);
   
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
@@ -113,13 +115,16 @@ export default function UpdateFaBox() {
 
         setRenderState(1);
         if (!emailIsValid) {
-          window.alert("Please enter a valid email address.");
+          // window.alert("Please enter a valid email address.");
+          isntValidEmail(false);
         }
         if (!phoneIsValid) {
-          window.alert("Please enter a valid 10-digit phone number.");
+          isntValidPhone(false);
+          // window.alert("Please enter a valid 10-digit phone number.");
         }
         if (!accIsValid) {
-          window.alert("Please enter a valid Account number.");
+          isntValidAcc(false);
+          // window.alert("Please enter a valid Account number.");
         }
         console.log("entereed");
         return ;
@@ -287,21 +292,23 @@ export default function UpdateFaBox() {
                                       value={formData.choices[i]?.value || ""}
                                       required
                                     />
-
-                                   
+                                    {/* {!isValidEmail && <p className="text-sm text-red-500">Invalid {x.name}</p>}
+                                    {!isValidPhone && <p className="text-sm text-red-500">Invalid {x.name}</p>}
+                                    {!isValidAcc && <p className="text-sm text-red-500">Invalid {x.name}</p>} */}
+                                  
                                     {x.name === "Email" &&
                                       (formData.choices[i]?.value.length === 0 ||
                                         !formData.choices[i]?.value.includes("@")) && (
-                                        <p className="text-sm text-red-500">Please Enter Valid {x.name}</p>
+                                        <p className="text-sm text-red-500">Invalid {x.name}</p>
                                       )}
                                     {x.code === "phone" &&
                                       (formData.choices[i]?.value.length === 0 ||
                                         formData.choices[i]?.value.length !== 10) && (
-                                        <p className="text-sm text-red-500">Phone number must be 10 digits</p>
+                                        <p className="text-sm text-red-500">Invalid Phone Number</p>
                                       )}
                                     {x.code === "account_no" &&
                                       (!formData.choices[i]?.value || formData.choices[i]?.value === '') && (
-                                        <p className="text-sm text-red-500">Please select a {x.name}</p>
+                                        <p className="text-sm text-red-500">Invalid {x.name}</p>
                                       )}
                                     <div className="flex flex-row gap-4">
                                       <button
