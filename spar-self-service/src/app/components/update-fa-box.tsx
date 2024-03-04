@@ -28,7 +28,7 @@ export default function UpdateFaBox() {
   var alreadyLinked = false;
   const router = useRouter();
   
-  console.log(renderState);
+  
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
       arr.push(value);
@@ -105,13 +105,13 @@ export default function UpdateFaBox() {
         }
         if (x.code === "account_no") {
           const accValue = String(formData.choices[i]?.value);
-          if (accValue.length === 0 ) {
+          if (accValue.length === 0 || accValue.length !== 10) {
             accIsValid = false;
           }
         }
       });
       if (!emailIsValid || !phoneIsValid || !accIsValid) {
-        
+
         setRenderState(1);
         if (!emailIsValid) {
           window.alert("Please enter a valid email address.");
@@ -208,9 +208,11 @@ export default function UpdateFaBox() {
       }
     }
   };
+
   useEffect(() => {
-    updateFaSubmit();
+    updateFaSubmit(); 
   }, []);
+
   const subTabs = ["subTab1", "subTab2", "subTab3"];
   return (
     <>
@@ -299,17 +301,15 @@ export default function UpdateFaBox() {
                                         <p className="text-sm text-red-500">Phone number must be 10 digits</p>
                                       )}
                                     {x.code === "account_no" &&
-                                      (formData.choices[i]?.value.length === 0 ) && (
+                                      (!formData.choices[i]?.value || formData.choices[i]?.value === '') && (
                                         <p className="text-sm text-red-500">Please select a {x.name}</p>
                                       )}
                                     <div className="flex flex-row gap-4">
                                       <button
-                                        className="inline-block mt-8 shadow-lg shadow-orange-300 bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
+                                        className="inline-block mt-8 shadow-lg shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
                                         onClick={() => updateFaSubmit()}
                                       >
-                                        <Link href={`/${localActive}/status`} className="text-white text-sm">
-                                          {t("submit")}
-                                        </Link>
+                                        {t("submit")}
                                       </button>
 
                                       <div className="inline-block shadow-lg shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:bg-yellow-700">
