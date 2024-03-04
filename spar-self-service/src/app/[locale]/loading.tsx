@@ -1,7 +1,10 @@
+import {CircularProgress} from "@mui/material";
+import React from "react";
+
 export default function Loading() {
   return (
-    <>
-      <div className="text-center text-2xl font-bold mt-10 bg-orange-200">Loading...................</div>
-    </>
+    <div className="flex items-center justify-center h-screen">
+      <CircularProgress />
+    </div>
   );
 }

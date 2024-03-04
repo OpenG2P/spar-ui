@@ -8,7 +8,7 @@ import {AuthProvider} from "../store/auth-context";
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400", "700"],
+  weight: ["300","400", "700"],
 });
 
 export const metadata: Metadata = {
