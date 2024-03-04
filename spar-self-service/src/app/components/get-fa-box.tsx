@@ -54,12 +54,12 @@ export default function GetFaBox() {
           </div>
         )}
         {renderState === 2 && (!getFaResult || getFaResult.length === 0) && (
-          <div className="row flex justify-content-center">
-            <div className="flex flex-col">
-              <div className="text-orange-500 text-2xl">{t("title")}</div>
+          <div className="flex justify-content-center m-16 ">
+            <div className="flex flex-col  ">
+              <div className="text-orange-500 text-3xl">{t("title_2")}</div>
               <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
-              <p className="text-gray-800 mt-4 text-md">{t("description")}</p>
-              <div className="bg-black rounded-3xl w-full h-12 shadow-md hover:bg-yellow-700 mt-6 flex items-center justify-center">
+              <p className="text-gray-800 mt-4 text-lg">{t("description")}</p>
+              <div className="bg-black rounded-3xl shadow-lg shadow-orange-300 w-full h-12 hover:bg-yellow-700 mt-6 flex items-center justify-center">
                 <Link href={`/${localActive}/update`} className="text-white text-sm">
                   {t("button_text")}
                 </Link>
@@ -74,13 +74,13 @@ export default function GetFaBox() {
               <div className="text-orange-500 text-2xl">{t("title")}</div>
               <div className="w-full border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"></div>
             </div>
-            {getFaResult.slice().reverse().map((x, i) => (
+            {getFaResult.slice().map((x, i) => (
               <li
                 key={`item-${i}`}
                 className="border-b-2 border-orange-200 border-opacity-100 p-2 flex items-start space-x-4"
               >
                 <div className="flex flex-row">
-                  {x.key === "type" ? (
+                  {x.key === "Type" ? (
                     <span>
                       <Image
                         className="w-10 h-10 inline-block mt-2 bg-orange-200 rounded-lg"
@@ -100,7 +100,7 @@ export default function GetFaBox() {
                 </div>
               </li>
             ))}
-            <div className="inline-block bg-black rounded-3xl  p-2 w-1/2 text-center shadow-md hover:bg-yellow-700 mt-6">
+            <div className="inline-block shadow-lg shadow-orange-300 bg-black rounded-3xl  p-2 w-1/2 text-center  hover:bg-yellow-700 mt-6">
               <Link href={`/${localActive}/update`} className="text-white text-sm">
                 {t("button_text2")}
               </Link>

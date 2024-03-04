@@ -13,7 +13,16 @@ export default function ProfilePage() {
   const t = useTranslations("Profile");
   const {profile} = useAuth();
 
-  const name = profile?.name || "Guest";
+  const name = profile?.name || "Guest ";
+  const phoneNumber = profile?.phone_number || "+745 12345 67890";
+  const email = profile?.email || "johnsmith@gmail.com";
+  const dob = profile?.birthdate || "1975 January 01";
+  const gender = profile?.gender || "Male";
+  const address =
+    profile?.address ||
+    "Locality -- Spencer Villa Street -- 123450 Emily Radial Apartment -- 152 Country -- New York, USA Postal Code -- 321000";
+
+   
   return (
     <>
       <div>
@@ -59,7 +68,7 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex-1 min-w-0 mt-2 ">
                         <div className="text-sm font-medium text-gray-600  no-underdivne ">{t("ph_no")}</div>
-                        <p className="text-md text-black font-bold ">+745 12345 67890</p>
+                        <p className="text-md text-black font-bold ">{phoneNumber}</p>
                       </div>
                     </div>
                     <div className=" opacity-100 flex items-start ">
@@ -74,7 +83,7 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex-1 min-w-0 mt-2 ">
                         <div className="text-sm font-medium text-gray-600  no-underdivne ">{t("email")}</div>
-                        <p className="text-md text-black font-bold">johnsmith@gmail.com</p>
+                        <p className="text-md text-black font-bold">{email}</p>
                       </div>
                     </div>
                   </div>
@@ -92,11 +101,11 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex-1 min-w-0 mt-2 ">
                         <div className="text-sm font-medium text-gray-600  no-underdivne ">{t("dob")}</div>
-                        <p className="text-md text-black font-bold ">1975 January 01</p>
+                        <p className="text-md text-black font-bold ">{dob}</p>
                       </div>
                     </div>
-                    <div className=" opacity-100 flex items-start ml-10 ">
-                      <div className=" rounded-lg opacity-100 w-10 h-10 m-2 ml-5 flex-shrink-0  ">
+                    <div className=" opacity-100 flex items-start ml-20">
+                      <div className=" rounded-lg opacity-100 w-10 h-10 m-2  flex-shrink-0  ">
                         <Image
                           className=" square-full  "
                           src={prefixBasePath("/img/gender.png")}
@@ -107,7 +116,7 @@ export default function ProfilePage() {
                       </div>
                       <div className="flex-1 min-w-0 mt-2 ">
                         <div className="text-sm font-medium text-gray-600  no-underdivne ">{t("gender")}</div>
-                        <p className="text-md text-black font-bold">Male</p>
+                        <p className="text-md text-black font-bold">{gender}</p>
                       </div>
                     </div>
                   </div>
@@ -117,9 +126,8 @@ export default function ProfilePage() {
                       <p className="text-sm font-medium text-gray-600">{t("add")}</p>
                       <div className="flex flex-col w-1/2 border-dashed border-2  mt-2 square-full border-gray-400 p-4 rounded-2xl">
                         <p className="text-sm text-wrap w-1/2 text-black ">
-                          {" "}
-                          Locality -- Spencer Villa Street -- 123450 Emily Radial Apartment -- 152 Country --
-                          New York, USA Postal Code -- 321000
+                          
+                          {address}
                         </p>
                       </div>
                     </div>

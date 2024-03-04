@@ -22,14 +22,13 @@ export default function UpdateFaBox() {
   const {setDataSubmitted} = useSubmission();
 
   const [subTab, setSubTab] = useState("");
-  // const [subTab, setSubTab] = useState("subTab1");
   const [formData, setFormData] = useState<State>({choices: [], levels: []});
   //  0 - empty/default. 1 - update form. 2 - loading. 3 - succ. 4 - fail.
   const [renderState, setRenderState] = useState(0);
   var alreadyLinked = false;
   const router = useRouter();
-  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
-
+  
+  console.log(renderState);
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
       arr.push(value);
@@ -78,11 +77,14 @@ export default function UpdateFaBox() {
   }
 
   function updateFaSubmit() {
+    
     setRenderState(2);
+    
     if (renderState !== 1 && renderState !== 2) {
       setRenderState(1);
       const localFormData = structuredClone(formData);
       fetchLevelsAndRender(localFormData, 0, 1);
+
     } else {
       let emailIsValid = true;
       let phoneIsValid = true;
@@ -92,24 +94,24 @@ export default function UpdateFaBox() {
           const emailValue = String(formData.choices[i]?.value);
           if (emailValue.length === 0 || !emailValue.includes("@")) {
             emailIsValid = false;
+            
           }
         }
         if (x.code === "phone") {
           const phoneValue = String(formData.choices[i]?.value);
-          if (phoneValue.length === 0 || phoneValue.length !== 10) {
-            console.log("phoneValue:", phoneValue);
+          if (phoneValue.length === 0 || phoneValue.length !== 10) {           
             phoneIsValid = false;
           }
         }
         if (x.code === "account_no") {
           const accValue = String(formData.choices[i]?.value);
-          if (accValue.length === 0 || accValue.length !== 10) {
+          if (accValue.length === 0 ) {
             accIsValid = false;
           }
         }
       });
       if (!emailIsValid || !phoneIsValid || !accIsValid) {
-        setEmailIsInvalid(!emailIsValid);
+        
         setRenderState(1);
         if (!emailIsValid) {
           window.alert("Please enter a valid email address.");
@@ -121,7 +123,7 @@ export default function UpdateFaBox() {
           window.alert("Please enter a valid Account number.");
         }
         console.log("entereed");
-        return;
+        return ;
       }
       const updateFaSuccess = (res: any) => {
         if (res.status === "succ") {
@@ -285,9 +287,7 @@ export default function UpdateFaBox() {
                                       required
                                     />
 
-                                    {emailIsInvalid && (
-                                      <p className="text-sm text-red-500">Please Enter Valid Email</p>
-                                    )}
+                                   
                                     {x.name === "Email" &&
                                       (formData.choices[i]?.value.length === 0 ||
                                         !formData.choices[i]?.value.includes("@")) && (
@@ -299,13 +299,12 @@ export default function UpdateFaBox() {
                                         <p className="text-sm text-red-500">Phone number must be 10 digits</p>
                                       )}
                                     {x.code === "account_no" &&
-                                      (formData.choices[i]?.value.length === 0 ||
-                                        formData.choices[i]?.value.length < 10) && (
+                                      (formData.choices[i]?.value.length === 0 ) && (
                                         <p className="text-sm text-red-500">Please select a {x.name}</p>
                                       )}
                                     <div className="flex flex-row gap-4">
                                       <button
-                                        className="inline-block mt-8 bg-black rounded-3xl w-1/2 text-center p-2 shadow-md hover:bg-yellow-700"
+                                        className="inline-block mt-8 shadow-lg shadow-orange-300 bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
                                         onClick={() => updateFaSubmit()}
                                       >
                                         <Link href={`/${localActive}/status`} className="text-white text-sm">
@@ -313,7 +312,7 @@ export default function UpdateFaBox() {
                                         </Link>
                                       </button>
 
-                                      <div className="inline-block mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 shadow-md hover:bg-yellow-700">
+                                      <div className="inline-block shadow-lg shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:bg-yellow-700">
                                         <Link href={`/${localActive}/home`} className="text-gray-500 text-sm">
                                           Cancel
                                         </Link>

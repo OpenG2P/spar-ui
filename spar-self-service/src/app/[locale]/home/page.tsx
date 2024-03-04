@@ -23,20 +23,12 @@ export default function Next() {
           </div>
         </div>
         <div className="w-full max-w-sm flex flex-col m-12 basis-1/2">
-          <div className="flex flex-col p-1 relative items-center">
-            <div className="max-w-sm mx-auto mt-8">
-              <div className="flex justify-center">
-                <nav className=" flex overflow-x-auto items-center p-1 text-xl text-gray-600 bg-white rounded-3xl">
-                  <div className="mt-8">
-                    <div className="block w-full max-w-[18rem] mt-6 rounded-lg bg-white ">
-                      <Suspense fallback={<Loading />}>
-                        <GetFaBox />
-                      </Suspense>
-                    </div>
-                  </div>
-                </nav>
-              </div>
-            </div>
+          <div className="max-w-sm mx-auto m-5 mt-12">
+            
+            <Suspense fallback={<Loading />}>
+              <GetFaBox />
+            </Suspense>
+                
           </div>
         </div>
       </div>
