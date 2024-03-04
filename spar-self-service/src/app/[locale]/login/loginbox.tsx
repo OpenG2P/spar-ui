@@ -37,7 +37,7 @@ export default function LoginBox() {
           loginProviders.map((x) => (
             <div
               key={`provider-${x.id}`}
-              className="inline-block bg-black rounded-3xl shadow-lg shadow-orange-300 text-center px-3 py-2 hover:bg-yellow-700 mt-2"
+              className="inline-block bg-black rounded-3xl shadow shadow-orange-300 text-center px-3 py-2 hover:bg-yellow-700 mt-2"
             >
               <a
                 href={prefixBaseApiPath(`/auth/getLoginProviderRedirect/${x.id}`)}
@@ -45,12 +45,8 @@ export default function LoginBox() {
               >
                 {t("button_text")}
               </a>
-              
             </div>
-           
-
           ))}
-        
       </div>
       <Image
         src={prefixBasePath("/img/globe_bg.png")}

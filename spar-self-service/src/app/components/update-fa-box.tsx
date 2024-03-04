@@ -27,10 +27,10 @@ export default function UpdateFaBox() {
   const [renderState, setRenderState] = useState(0);
   var alreadyLinked = false;
   const router = useRouter();
-  const [isValidEmail , isntValidEmail] = useState(true);
+  const [isValidEmail, isntValidEmail] = useState(true);
   const [isValidPhone, isntValidPhone] = useState(true);
   const [isValidAcc, isntValidAcc] = useState(true);
-  
+
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
       arr.push(value);
@@ -79,14 +79,12 @@ export default function UpdateFaBox() {
   }
 
   function updateFaSubmit() {
-    
     setRenderState(2);
-    
+
     if (renderState !== 1 && renderState !== 2) {
       setRenderState(1);
       const localFormData = structuredClone(formData);
       fetchLevelsAndRender(localFormData, 0, 1);
-
     } else {
       let emailIsValid = true;
       let phoneIsValid = true;
@@ -96,38 +94,33 @@ export default function UpdateFaBox() {
           const emailValue = String(formData.choices[i]?.value);
           if (emailValue.length === 0 || !emailValue.includes("@")) {
             emailIsValid = false;
-            
           }
         }
         if (x.code === "phone") {
           const phoneValue = String(formData.choices[i]?.value);
-          if (phoneValue.length === 0 || phoneValue.length !== 10) {           
+          if (phoneValue.length === 0 || phoneValue.length !== 10) {
             phoneIsValid = false;
           }
         }
         if (x.code === "account_no") {
-          if (!formData.choices[i]?.value || formData.choices[i]?.value === '') {
+          if (!formData.choices[i]?.value || formData.choices[i]?.value === "") {
             accIsValid = false;
           }
         }
       });
       if (!emailIsValid || !phoneIsValid || !accIsValid) {
-
         setRenderState(1);
         if (!emailIsValid) {
-          // window.alert("Please enter a valid email address.");
           isntValidEmail(false);
         }
         if (!phoneIsValid) {
           isntValidPhone(false);
-          // window.alert("Please enter a valid 10-digit phone number.");
         }
         if (!accIsValid) {
           isntValidAcc(false);
-          // window.alert("Please enter a valid Account number.");
         }
         console.log("entereed");
-        return ;
+        return;
       }
       const updateFaSuccess = (res: any) => {
         if (res.status === "succ") {
@@ -214,7 +207,7 @@ export default function UpdateFaBox() {
   };
 
   useEffect(() => {
-    updateFaSubmit(); 
+    updateFaSubmit();
   }, []);
 
   const subTabs = ["subTab1", "subTab2", "subTab3"];
@@ -269,7 +262,7 @@ export default function UpdateFaBox() {
                                   <div>
                                     <label className=" text-black text-sm">{x.name}</label>
                                     <select
-                                      className="w-full border-t-2 p-3 border border-gray-500 shadow-md rounded-md bg-white"
+                                      className="outline-none w-full border-t-2 p-3 border border-gray-500 shadow-md rounded-md bg-white"
                                       onChange={(event) => onFieldChange(i, event.target.value)}
                                       value={formData.choices[i]?.value}
                                       required
@@ -287,15 +280,13 @@ export default function UpdateFaBox() {
                                     <label className="text-sm text-black">{x.name}</label>
                                     <input
                                       type="text"
-                                      className="w-full p-2 mt-1  rounded-md border "
+                                      className="outline-none w-full p-2 mt-1  rounded-md border "
                                       onChange={(event) => onFieldChange(i, event.target.value)}
                                       value={formData.choices[i]?.value || ""}
+                                      placeholder={`Type ${x.name}`}
                                       required
                                     />
-                                    {/* {!isValidEmail && <p className="text-sm text-red-500">Invalid {x.name}</p>}
-                                    {!isValidPhone && <p className="text-sm text-red-500">Invalid {x.name}</p>}
-                                    {!isValidAcc && <p className="text-sm text-red-500">Invalid {x.name}</p>} */}
-                                  
+
                                     {x.name === "Email" &&
                                       (formData.choices[i]?.value.length === 0 ||
                                         !formData.choices[i]?.value.includes("@")) && (
@@ -307,18 +298,18 @@ export default function UpdateFaBox() {
                                         <p className="text-sm text-red-500">Invalid Phone Number</p>
                                       )}
                                     {x.code === "account_no" &&
-                                      (!formData.choices[i]?.value || formData.choices[i]?.value === '') && (
+                                      (!formData.choices[i]?.value || formData.choices[i]?.value === "") && (
                                         <p className="text-sm text-red-500">Invalid {x.name}</p>
                                       )}
                                     <div className="flex flex-row gap-4">
                                       <button
-                                        className="inline-block mt-8 shadow-lg shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
+                                        className="inline-block mt-8 shadow-md shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
                                         onClick={() => updateFaSubmit()}
                                       >
                                         {t("submit")}
                                       </button>
 
-                                      <div className="inline-block shadow-lg shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:bg-yellow-700">
+                                      <div className="inline-block shadow-md shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:bg-yellow-700">
                                         <Link href={`/${localActive}/home`} className="text-gray-500 text-sm">
                                           Cancel
                                         </Link>

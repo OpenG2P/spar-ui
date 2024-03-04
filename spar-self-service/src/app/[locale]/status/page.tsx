@@ -3,11 +3,12 @@ import {useRouter} from "next/navigation";
 import Image from "next/image";
 import {AuthUtil} from "@/app/components/auth";
 import {useLocale} from "next-intl";
-import {useEffect} from "react";
+import {Suspense, useEffect} from "react";
 import {useTranslations} from "next-intl";
 import Link from "next/link";
 import {useSubmission} from "@/app/store/auth-context";
 import {prefixBasePath} from "@/utils/path";
+import Loading from "../loading";
 
 export default function Next() {
   const localActive = useLocale();
@@ -26,47 +27,37 @@ export default function Next() {
       <div className="flex flex-row">
         <div className="h-screen bg-gray-100 basis-1/2">
           <div className="m-24">
-            <Image
-              className="object-cover w-full h-full"
-              src={prefixBasePath("/img/infographic_01.png")}
-              alt="person"
-              width={600}
-              height={600}
-            />
+            <img src={prefixBasePath("/img/infographic_01.png")} alt="person" className="max-h-screen" />
           </div>
         </div>
-        <div className="w-full max-w-sm flex flex-col m-12 basis-1/2">
-          <div className="flex flex-col p-1 relative items-center">
-            <div className="max-w-sm mx-auto mt-8">
-              <div className="flex justify-center">
-                <nav className=" flex overflow-x-auto items-center p-1 text-xl text-gray-600 bg-white rounded-3xl">
-                  <div className="mt-8">
-                    <div className="flex flex-col border-dashed border-2  square-full border-gray-400 p-4 rounded-2xl">
-                      <div className="m-4 p-6">
-                        <Image
-                          className="object-cover "
-                          src={prefixBasePath("/img/green_tick.png")}
-                          alt="person"
-                          width={60}
-                          height={60}
-                        />
-                        <p className="text-2xl text-green-600 mt-2">{t("thankyou")}</p>
-                        <p className="text-gray-800">{t("status_message")}</p>
-                        <Link href={`/${localActive}/home`} className="text-white text-sm">
-                          <Image
-                            className="ml-48 mt-4"
-                            src={prefixBasePath("/img/arrow_02.png")}
-                            alt="person"
-                            width={50}
-                            height={50}
-                          />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </nav>
+        <div className="w-full max-w-sm flex flex-col m-20 basis-1/2">
+          <div className=" m-5 mt-12">
+            <Suspense fallback={<Loading />}>
+              <div className="m-4 p-6  transition duration-300 transform hover:shadow-sky-200 hover:shadow-lg   border-dashed border-gray-400  border-2 rounded-2xl">
+                <div className="flex flex-col m-3 flex-wrap">
+                  <Image
+                    className=" "
+                    src={prefixBasePath("/img/green_tick.png")}
+                    alt="person"
+                    width={60}
+                    height={60}
+                  />
+                  <p className="text-3xl text-green-500 mt-2">{t("thankyou")}</p>
+
+                  <p className="text-gray-900 text-xl text-wrap">{t("status_message")}</p>
+
+                  <Link href={`/${localActive}/home`}>
+                    <Image
+                      className="ml-48 mt-4"
+                      src={prefixBasePath("/img/arrow_02.png")}
+                      alt="person"
+                      width={40}
+                      height={40}
+                    />
+                  </Link>
+                </div>
               </div>
-            </div>
+            </Suspense>
           </div>
         </div>
       </div>

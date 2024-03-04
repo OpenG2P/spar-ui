@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import {useLocale} from "next-intl";
 import {useTranslations} from "next-intl";
 import {AuthUtil} from "@/app/components/auth";
@@ -16,20 +15,14 @@ export default function Next() {
       <div className="flex flex-row ">
         <div className="h-screen bg-gray-100 basis-1/2">
           <div className="m-24">
-            <Image
-              className="object-cover w-full h-full"
-              src={prefixBasePath("/img/infographic_01.png")}
-              alt="person"
-              width={600}
-              height={600}
-            />
+            <img src={prefixBasePath("/img/infographic_01.png")} alt="person" />
           </div>
         </div>
         <div className="w-full max-w-sm flex flex-col m-12 pl-6 basis-1/2">
           <div className="flex flex-col p-1 relative items-center">
             <div className="max-w-sm mx-auto mt-2">
               <div className="flex justify-center">
-                <nav className=" flex overflow-x-auto items-center p-1 text-xl text-gray-600 bg-white rounded-3xl">
+                <nav className=" flex overflow-x-auto items-center p-1 text-md text-gray-600 bg-white rounded-3xl">
                   <div className="mt-3">
                     <div className="flex flex-col">
                       <div className="text-orange-500 text-2xl">{t("update")}</div>

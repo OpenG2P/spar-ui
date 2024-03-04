@@ -24,7 +24,7 @@
   },
   "Status": {
     "thankyou": "Thank You",
-    "status_message": "Your account Information Updated Successfully"
+    "status_message": "Your account information is updated successfully"
   },
   "Profile": {
     "name": "Name",
@@ -36,7 +36,7 @@
   },
   "login": {
     "title": " Social Payments Account Registry",
-    "description_1": "With SPAR, Choose the account/wallet wher you receive your",
+    "description_1": "With SPAR, Choose the account/wallet where you receive your",
     "description_2": "social benefits in a simple,convenient,secure way",
     "button_text": "PROCEED WITH NATIONAL ID"
   },
