@@ -303,15 +303,15 @@ export default function UpdateFaBox() {
                                       )}
                                     <div className="flex flex-row gap-4">
                                       <button
-                                        className="inline-block mt-8 shadow-md shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
+                                        className="inline-block mt-8 shadow-md shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-customYellow"
                                         onClick={() => updateFaSubmit()}
                                       >
                                         {t("submit")}
                                       </button>
 
-                                      <div className="inline-block shadow-md shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:bg-yellow-700">
+                                      <div className="inline-block shadow-md shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:border-black hover:border-2">
                                         <Link href={`/${localActive}/home`} className="text-gray-500 text-sm">
-                                          Cancel
+                                          CANCEL
                                         </Link>
                                       </div>
                                     </div>

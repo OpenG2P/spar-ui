@@ -13,8 +13,8 @@ export default function Next() {
     <main>
       <AuthUtil failedRedirectUrl={`/${localActive}/login`} />
       <div className="flex flex-row ">
-        <div className="h-screen bg-gray-100 basis-1/2">
-          <div className="m-24">
+        <div className=" bg-gray-100 basis-1/2">
+          <div className="pl-24 ml-6 mt-16">
             <img src={prefixBasePath("/img/infographic_01.png")} alt="person" />
           </div>
         </div>
