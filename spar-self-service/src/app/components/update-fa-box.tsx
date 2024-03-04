@@ -27,8 +27,10 @@ export default function UpdateFaBox() {
   const [renderState, setRenderState] = useState(0);
   var alreadyLinked = false;
   const router = useRouter();
+  const [isValidEmail , isntValidEmail] = useState(true);
+  const [isValidPhone, isntValidPhone] = useState(true);
+  const [isValidAcc, isntValidAcc] = useState(true);
   
-  console.log(renderState);
   function pushOrResetArrayAfterIndex<T>(arr: T[], index: number, value: T) {
     if (arr.length <= index) {
       arr.push(value);
@@ -104,23 +106,25 @@ export default function UpdateFaBox() {
           }
         }
         if (x.code === "account_no") {
-          const accValue = String(formData.choices[i]?.value);
-          if (accValue.length === 0 ) {
+          if (!formData.choices[i]?.value || formData.choices[i]?.value === '') {
             accIsValid = false;
           }
         }
       });
       if (!emailIsValid || !phoneIsValid || !accIsValid) {
-        
+
         setRenderState(1);
         if (!emailIsValid) {
-          window.alert("Please enter a valid email address.");
+          // window.alert("Please enter a valid email address.");
+          isntValidEmail(false);
         }
         if (!phoneIsValid) {
-          window.alert("Please enter a valid 10-digit phone number.");
+          isntValidPhone(false);
+          // window.alert("Please enter a valid 10-digit phone number.");
         }
         if (!accIsValid) {
-          window.alert("Please enter a valid Account number.");
+          isntValidAcc(false);
+          // window.alert("Please enter a valid Account number.");
         }
         console.log("entereed");
         return ;
@@ -208,9 +212,11 @@ export default function UpdateFaBox() {
       }
     }
   };
+
   useEffect(() => {
-    updateFaSubmit();
+    updateFaSubmit(); 
   }, []);
+
   const subTabs = ["subTab1", "subTab2", "subTab3"];
   return (
     <>
@@ -286,30 +292,30 @@ export default function UpdateFaBox() {
                                       value={formData.choices[i]?.value || ""}
                                       required
                                     />
-
-                                   
+                                    {/* {!isValidEmail && <p className="text-sm text-red-500">Invalid {x.name}</p>}
+                                    {!isValidPhone && <p className="text-sm text-red-500">Invalid {x.name}</p>}
+                                    {!isValidAcc && <p className="text-sm text-red-500">Invalid {x.name}</p>} */}
+                                  
                                     {x.name === "Email" &&
                                       (formData.choices[i]?.value.length === 0 ||
                                         !formData.choices[i]?.value.includes("@")) && (
-                                        <p className="text-sm text-red-500">Please Enter Valid {x.name}</p>
+                                        <p className="text-sm text-red-500">Invalid {x.name}</p>
                                       )}
                                     {x.code === "phone" &&
                                       (formData.choices[i]?.value.length === 0 ||
                                         formData.choices[i]?.value.length !== 10) && (
-                                        <p className="text-sm text-red-500">Phone number must be 10 digits</p>
+                                        <p className="text-sm text-red-500">Invalid Phone Number</p>
                                       )}
                                     {x.code === "account_no" &&
-                                      (formData.choices[i]?.value.length === 0 ) && (
-                                        <p className="text-sm text-red-500">Please select a {x.name}</p>
+                                      (!formData.choices[i]?.value || formData.choices[i]?.value === '') && (
+                                        <p className="text-sm text-red-500">Invalid {x.name}</p>
                                       )}
                                     <div className="flex flex-row gap-4">
                                       <button
-                                        className="inline-block mt-8 shadow-lg shadow-orange-300 bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
+                                        className="inline-block mt-8 shadow-lg shadow-orange-300 text-white text-sm  bg-black rounded-3xl w-1/2 text-center p-2  hover:bg-yellow-700"
                                         onClick={() => updateFaSubmit()}
                                       >
-                                        <Link href={`/${localActive}/status`} className="text-white text-sm">
-                                          {t("submit")}
-                                        </Link>
+                                        {t("submit")}
                                       </button>
 
                                       <div className="inline-block shadow-lg shadow-gray-300 mt-8 border border-gray-500 rounded-3xl w-1/2 text-center p-2 hover:bg-yellow-700">
